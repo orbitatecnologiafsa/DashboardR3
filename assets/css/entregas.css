@@ -1,0 +1,68 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+table thead {
+    background-color: #f2f2f2;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #821A4D;
+    color: white;
+}
+
+table tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td a {
+    text-decoration: none;
+    color: #821A4D;
+    margin-right: 10px;
+}
+
+table td a:hover {
+    text-decoration: underline;
+    color: #570d35;
+}
+
+
+/*
+<table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Telefone</th>
+                                <th>Endereços</th>
+                                <th>Cidade</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Nome</td>
+                                <td>Telefone</td>
+                                <td>Endereços</td>
+                                <td>Cidade</td>
+                                <td>
+                                    <a href="#">Visualizar</a>
+                                    <a href="#">Excluir</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+*/

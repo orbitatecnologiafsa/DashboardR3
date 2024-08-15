@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Allen Cond</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/graficos.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" href="./img/logo.ico" type="image/x-icon">
+</head>
+
+<body>    
+    <nav>
+        <div class="nav-header">
+            <img src="./img/logo.png" alt="logo">
+        </div>
+        <hr>
+        <ul class="nav-links">
+            <a href="./index.html">
+                <div class="nav-item active">
+                    <li><i class="fas fa-home"></i>Inicio</li>
+                </div>
+            </a>
+            <a href="./pages/solicitacoes.html">
+                <div class="nav-item">
+                    <li><i class="fas fa-user-clock"></i>Solicitações</li>
+                </div>
+            </a>
+            <a href="#">
+                <div class="nav-item">
+                    <li><i class="fas fa-boxes"></i>Entregas</li>
+                </div>
+            </a>
+            <a href="./pages/ocorrencias.html">
+                <div class="nav-item">
+                    <li><i class="fab fa-wpforms"></i>Ocorrências</li>
+                </div>
+            </a>
+        </ul>
+    </nav>
+    <div class="conteudo">
+        
+            <header>
+                <div class="info-page">
+                    <ol class="ol-info">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="#">Painel de controle</a></li>
+                    </ol>
+                    <h4 style="margin: 0px 7px;">Painel de controle</h4>
+                </div>
+                <search>
+                    <form action="#" method="GET" id="searchForm">
+                        <label class="searchLabelWrap">
+                            <input type="search" autocomplete="off" placeholder="Pesquisar..." class="searchInput" name="s">
+                        </label>
+                    </form>
+                </search>
+    
+            </header>
+            <div class="cabecalho">
+                <div class="primary-info">
+                    <div class="info-header">
+                        <p>Visitas Hoje</p>
+                        <h2>342</h2>
+                    </div>
+                    <div class="background-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="primary-info">
+                    <div class="info-header">
+                        <p>Entregas</p>
+                        <h2>54</h2>
+                    </div>
+                    <div class="background-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                </div>
+                <div class="primary-info">
+                    <div class="info-header">
+                        <p>Entregas</p>
+                        <h2>54</h2>
+                    </div>
+                    <div class="background-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                </div>
+                <div class="primary-info">
+                    <div class="info-header">
+                        <p>Solicitações</p>
+                        <h2>12</h2>
+                    </div>
+                    <div class="background-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="principal">
+                <div class="box">
+                    <div class="box-header">
+                        <h4>Visitas nos ultimos 7 dias</h4>
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="box-content">
+                        <div class="chart-container">
+                            <canvas id="graficoVisitas"></canvas>
+                        </div>
+                        <button class="export-button" data-report="visitas">Exportar relatorio <i class="fas fa-file-download"></i></button>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="box-header">
+                        <h4>Entregas nos ultimos 7 dias</h4>
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <div class="box-content">
+                        <div class="chart-container">
+                            <canvas id="graficoEntregas"></canvas>
+                        </div>
+                        <button class="export-button" data-report="entregas">Exportar relatorio <i class="fas fa-file-download"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="rodape">
+                <div class="box">
+                    <h3></h3>
+                    <p></p>
+                </div>
+            </div>
+
+        
+                
+    </div>
+        
+    
+  
+    <script src="./js/grafico.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="./js/vueDashboard.js"></script>
+</body>
+
+</html>
