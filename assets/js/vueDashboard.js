@@ -1,4 +1,4 @@
-const URL = 'http://localhost:3001';
+const URL = 'https://dashboardr3.onrender.com';
 
 new Vue({
   el: '#appDashboard',
