@@ -1,10 +1,10 @@
 const express = require('express');
-const pool = require('./db');
-const db = require('./firebase'); 
+const pool = require('./server/db.js');
+const db = require('./server/firebase.js'); 
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
-const firebaseDB = require('./firebase.js');
+
 
 
 
