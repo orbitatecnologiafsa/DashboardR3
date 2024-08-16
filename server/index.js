@@ -4,6 +4,7 @@ const db = require('./firebase');
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
+const firebaseDB = require('./firebase.js');
 
 
 
@@ -20,7 +21,14 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-
+// app.use((req, res, next) => {
+//   const protectedPages = ['/home.html']; 
+//   if (protectedPages.includes(req.url) && !req.session.isAuthenticated) {
+//     res.status(401).redirect('/index.html');
+//   } else {
+//     next();
+//   }
+// });
 
 function isAuthenticated(req, res, next) {
   if (req.session.authenticated) {
@@ -68,7 +76,7 @@ app.get('/api/dashboard', async (req, res) => {
            ELSE 'OUTRO'
        END AS "TIPO_MOVIMENTO",
        "VALOR", "CODNFSAIDA", "CODIGO_VENDA", "HORA"
-  FROM "C000044";
+  FROM "C000044" WHERE "DATA" >= CURRENT_DATE - INTERVAL '4 months';
 `);
     const responseVendas = await pool.query(`SELECT "C000061"."CODIGO", "C000061"."NUMERO", "CFOP", "DATA", "CODCLIENTE", "VALOR_PRODUTOS", "TOTAL_NOTA", "NOME","DESCONTO", "MODELO_NF", 
        CASE 
@@ -80,7 +88,8 @@ app.get('/api/dashboard', async (req, res) => {
            ELSE 'OUTRO'
        END AS "DESCRICAO_SITUACAO"
   FROM "C000061"
-  INNER JOIN "C000007" ON ("C000007"."CODIGO" = "CODCLIENTE");
+  INNER JOIN "C000007" ON ("C000007"."CODIGO" = "CODCLIENTE")
+  WHERE "DATA" >= CURRENT_DATE - INTERVAL '4 months';
 `);
     const responseItensVenda = await pool.query(`SELECT "CODNOTA", "CODPRODUTO", "QTDE", "UNITARIO", "TOTAL",  "C000062"."DESCONTO", "SUBTOTAL", "PRODUTO" FROM "C000062"
     INNER JOIN "C000061" ON ("C000061"."CODIGO" = "CODNOTA")
@@ -91,12 +100,18 @@ app.get('/api/dashboard', async (req, res) => {
     const dataCaixa = responseCaixa.rows;
     const dataVendas = responseVendas.rows;
     const dataItensVenda = responseItensVenda.rows;
-    
 
+
+
+   
+
+
+
+   
     for (let index = 0; index < 10; index++) {
       await db.collection('produtosEstoque').doc(`${index}`).set(data[index]) // Use set() em vez de add()
       .then(() => {
-        console.log('Document successfully written!');
+        console.log('Document successfully written in produtosEstoque!');
       })
       .catch((error) => {
         console.error('Error writing document: ', error);
@@ -108,19 +123,20 @@ app.get('/api/dashboard', async (req, res) => {
       
       await db.collection('Caixa').doc(`${index}`).set(dataCaixa[index]) // Use set() em vez de add()
       .then(() => {
-        console.log('Document successfully written!');
+        console.log('Document successfully written in Caixa!');
       })
       .catch((error) => {
         console.error('Error writing document: ', error);
       });
       
     }
-
-    for (let index = 0; index < 10; index++) {
+      
+       // Incrementa o id
+     for (let index = 0; index < 10; index++) {
       
       await db.collection('Vendas').doc(`${index}`).set(dataVendas[index]) // Use set() em vez de add()
       .then(() => {
-        console.log('Document successfully written!');
+        console.log('Document successfully written in Vendas!');
       })
       .catch((error) => {
         console.error('Error writing document: ', error);
@@ -131,16 +147,12 @@ app.get('/api/dashboard', async (req, res) => {
     for (let index = 0; index < 10; index++) {
       await db.collection('ItensVenda').doc(`${index}`).set(dataItensVenda[index]) // Use set() em vez de add()
       .then(() => {
-        console.log('Document successfully written!');
+        console.log('Document successfully written in ItensVenda!');
       })
       .catch((error) => {
         console.error('Error writing document: ', error);
       });
-      
-    }
-
-       // Incrementa o id
-    
+    }     
 
     // Envia a resposta final após processar os dados
     res.json({ data, dataCaixa, dataVendas, dataItensVenda });
@@ -213,20 +225,19 @@ const dataCaixa = responseCaixa.rows;
 const dataVendas = responseVendas.rows;
 const dataItensVenda = responseItensVenda.rows;
 
-async function deleteProdutosData() {
-  for (let index = 0; index < 10; index++) {
-    db.collection('produtosEstoque').doc(`${index}`).delete()
-    .then(() => {
-      console.log('Documento deletado da tabela produtosEstoque com sucesso!');
-    })
-    .catch((error) => {
-      console.error('Error deleting document: ', error);
-    });
-    
+for (let index = 0; index < 10; index++) {
+  db.collection('produtosEstoque').doc(`${index}`).delete()
+  .then(() => {
+    console.log('Documento deletado da tabela produtosEstoque com sucesso!');
+  })
+  .catch((error) => {
+    console.error('Error deleting document: ', error);
+  });
   
-  }
+
 }
-async function deleteCaixaData() {
+
+
   for (let index = 0; index < 10; index++) {
       
     db.collection('Caixa').doc(`${index}`).delete()
@@ -238,9 +249,9 @@ async function deleteCaixaData() {
     });
     
   }
-}
 
-async function deleteVendasData() {
+
+
   for (let index = 0; index < 10; index++) {
     db.collection('Vendas').doc(`${index}`).delete()
     .then(() => {
@@ -251,9 +262,9 @@ async function deleteVendasData() {
     });
 
   }
-}
 
-async function deleteItensVendaData() {
+
+
   for (let index = 0; index < 10; index++) {
     db.collection('ItensVenda').doc(`${index}`).delete()
     .then(() => {
@@ -264,19 +275,6 @@ async function deleteItensVendaData() {
     });
     
 
-  }
-}
-
-  try {
-
-    await deleteProdutosData();
-    await deleteCaixaData();
-    await deleteVendasData();
-    await deleteItensVendaData(); 
-    return;
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Server Error'); // Adiciona uma resposta de erro
   }
 });
 
@@ -297,8 +295,31 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+app.get('/api/dashboardProdutos', async (req, res) => {
+  const snapshot = await db.collection('produtosEstoque').get();
+  const dataProdutosEstoque = snapshot.docs.map(doc => doc.data());
+  console.log(dataProdutosEstoque);
+  res.json(dataProdutosEstoque);
+});
 
-
+app.get('/api/dashboardCaixa', async (req, res) => {
+  const snapshot = await db.collection('Caixa').get();
+  const dataCaixa = snapshot.docs.map(doc => doc.data());
+  console.log(dataCaixa);
+  res.json(dataCaixa);
+});
+app.get('/api/dashboardVendas', async (req, res) => {
+  const snapshot = await db.collection('Vendas').get();
+  const dataVendas = snapshot.docs.map(doc => doc.data());
+  console.log(dataVendas);
+  res.json(dataVendas);
+});
+app.get('/api/dashboardItensVenda', async (req, res) => {
+  const snapshot = await db.collection('ItensVenda').get();
+  const dataItensVenda = snapshot.docs.map(doc => doc.data());
+  console.log(dataItensVenda);
+  res.json(dataItensVenda);
+});
 
 
 

@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Allen Cond</title>
+    <title>Dashboard R3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/graficos.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
@@ -16,56 +17,47 @@
 <body>    
     <nav>
         <div class="nav-header">
-            <img src="./img/logo.png" alt="logo">
+            <img src="./img/R3.png" alt="logo">
         </div>
         <hr>
         <ul class="nav-links">
-            <a href="./index.html">
-                <div class="nav-item active">
-                    <li><i class="fas fa-home"></i>Inicio</li>
-                </div>
-            </a>
-            <a href="./pages/solicitacoes.html">
-                <div class="nav-item">
-                    <li><i class="fas fa-user-clock"></i>Solicitações</li>
-                </div>
-            </a>
-            <a href="#">
-                <div class="nav-item">
-                    <li><i class="fas fa-boxes"></i>Entregas</li>
-                </div>
-            </a>
-            <a href="./pages/ocorrencias.html">
-                <div class="nav-item">
-                    <li><i class="fab fa-wpforms"></i>Ocorrências</li>
-                </div>
-            </a>
+            <div class="nav-item active" data-tab="vendas">
+                <li><i class="fas fa-home"></i>Vendas</li>
+            </div>
+            <div class="nav-item" data-tab="produtos">
+                <li><i class="fas fa-user-clock"></i>Produtos</li>
+            </div>
+            <div class="nav-item" data-tab="caixa">
+                <li><i class="fas fa-boxes"></i>Caixa</li>
+            </div>
         </ul>
     </nav>
     <div class="conteudo">
-        
-            <header>
-                <div class="info-page">
-                    <ol class="ol-info">
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="#">Painel de controle</a></li>
-                    </ol>
-                    <h4 style="margin: 0px 7px;">Painel de controle</h4>
-                </div>
-                <search>
-                    <form action="#" method="GET" id="searchForm">
-                        <label class="searchLabelWrap">
-                            <input type="search" autocomplete="off" placeholder="Pesquisar..." class="searchInput" name="s">
-                        </label>
-                    </form>
-                </search>
-    
-            </header>
+       <div id="appDashboard">
+
+           <header>
+               <div class="info-page">
+                   <ol class="ol-info">
+                       <li><a href="index.html">Inicio</a></li>
+                       <li><a href="#">Painel de controle</a></li>
+                   </ol>
+                   <h4 style="margin: 0px 7px;">Painel de controle</h4>
+               </div>
+               <search>
+                   <form action="#" method="GET" id="searchForm">
+                       <label class="searchLabelWrap">
+                           <input type="search" autocomplete="off" placeholder="Pesquisar..." class="searchInput" name="s">
+                       </label>
+                   </form>
+               </search>
+   
+           </header>
+           <div id="tab-vendas" class="tab-content">
             <div class="cabecalho">
                 <div class="primary-info">
                     <div class="info-header">
-                        <p>Visitas Hoje</p>
-                        <h2>342</h2>
+                        <p>Vendas Hoje</p>
+                        <h2>R$ 1.234,00</h2>
                     </div>
                     <div class="background-icon">
                         <i class="fas fa-users"></i>
@@ -73,8 +65,8 @@
                 </div>
                 <div class="primary-info">
                     <div class="info-header">
-                        <p>Entregas</p>
-                        <h2>54</h2>
+                        <p>Vendas do mês</p>
+                        <h2>R$ 15.254,20</h2>
                     </div>
                     <div class="background-icon">
                         <i class="fas fa-boxes"></i>
@@ -82,8 +74,8 @@
                 </div>
                 <div class="primary-info">
                     <div class="info-header">
-                        <p>Entregas</p>
-                        <h2>54</h2>
+                        <p>Caixa</p>
+                        <h2>R$ 548,00</h2>
                     </div>
                     <div class="background-icon">
                         <i class="fas fa-boxes"></i>
@@ -91,8 +83,8 @@
                 </div>
                 <div class="primary-info">
                     <div class="info-header">
-                        <p>Solicitações</p>
-                        <h2>12</h2>
+                        <p>Estoque</p>
+                        <h2>R$ 1.854,00</h2>
                     </div>
                     <div class="background-icon">
                         <i class="fas fa-exclamation-circle"></i>
@@ -102,7 +94,7 @@
             <div class="principal">
                 <div class="box">
                     <div class="box-header">
-                        <h4>Visitas nos ultimos 7 dias</h4>
+                        <h4 id="dias">Vendas dos ultimos 7 dias</h4>
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="box-content">
@@ -114,7 +106,7 @@
                 </div>
                 <div class="box">
                     <div class="box-header">
-                        <h4>Entregas nos ultimos 7 dias</h4>
+                        <h4 id="dias">Vendas do mês de Agosto</h4>
                         <i class="fas fa-boxes"></i>
                     </div>
                     <div class="box-content">
@@ -125,22 +117,303 @@
                     </div>
                 </div>
             </div>
-            <div class="rodape">
-                <div class="box">
-                    <h3></h3>
-                    <p></p>
+            </div>
+            <div id="tab-produtos" class="tab-content" style="display:none;">
+                <div class="cabecalho">
+                    <div class="primary-info">
+                        <div class="info-header">
+                            <p>Vendas hoje</p>
+                            <h2>R$ 1.234,00</h2>
+                        </div>
+                        <div class="background-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="primary-info">
+                        <div class="info-header">
+                            <p>Vendas do mês</p>
+                            <h2>R$ 15.000,00</h2>
+                        </div>
+                        <div class="background-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                    </div>
+                    <div class="primary-info">
+                        <div class="info-header">
+                            <p>Entregas</p>
+                            <h2>54</h2>
+                        </div>
+                        <div class="background-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                    </div>
+                    <div class="primary-info">
+                        <div class="info-header">
+                            <p>Solicitações</p>
+                            <h2>12</h2>
+                        </div>
+                        <div class="background-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="principal">
+                    <div class="box">
+                        <div class="box-header">
+                            <h4 id="dias">Produtos em estoque</h4>
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="box-content">
+                            <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Codigo</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Prç. Custo</th>
+                                    <th scope="col">Prç. Venda</th>
+                                    <th scope="col">Estoque Atual</th>
+                                    <th scope="col">Medida</th>
+                                    <th scope="col">Nota fiscal</th>
+                                  </tr>
+                                </thead>
+                                <tbody v-for="(produtos, index) in produtosEstoqueData">
+                                  <tr>
+                                    <th scope="row">{{ produtos.CODIGO }}</th>
+                                    <td>{{ produtos.PRODUTO }}</td>
+                                    <td>{{ produtos.PRECOCUSTO.toFixed(2) }}</td>
+                                    <td>{{ produtos.PRECOVENDA.toFixed(2) }}</td>
+                                    <td>{{ produtos.ESTOQUE_ATUAL }}</td>
+                                    <td>{{ produtos.UNIDADE }}</td>
+                                    <td>{{ produtos.NOTAFISCAL }}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <!-- <p class="item">{{ produtos.PRODUTO }}</p>
+                                            <p class="item">{{ produtos.CODIGO }}</p>
+                                            <p class="item">{{ produtos.PRECOCUSTO.toFixed(2) }}</p>
+                                            <p class="item">{{ produtos.PRECOVENDA.toFixed(2) }}</p>
+                                            <p class="item">{{ produtos.ESTOQUE_ATUAL }}</p>
+                                            <p class="item">{{ produtos.UNIDADE }}</p>
+                                            <p class="item">{{ produtos.NOTAFISCAL }}</p> -->
+
+
+
+
+                            <!-- <section class="user-container">
+                                <div class="user-div-title">
+                                    <h1>Histórico de Caixa</h1>
+                                </div>
+                                <div class="user-grid">
+                                    <div class="user-grid-item">Nome</div>
+                                    <div class="user-grid-item">Codigo</div>
+                                    <div class="user-grid-item">Prç. Custo</div>
+                                    <div class="user-grid-item">Prç. Venda</div>
+                                    <div class="user-grid-item">Estoque Atual</div>
+                                    <div class="user-grid-item">Medida</div>
+                                    <div class="user-grid-item">Nota fiscal</div>
+                                </div>
+                                <div class="container">
+                                    <ul class="user-list" id="moradorLista" v-for="(produtos, index) in produtosEstoqueData">
+                                        <li id="moradorItem" class="item-list">
+                                            <p class="item">{{ produtos.PRODUTO }}</p>
+                                            <p class="item">{{ produtos.CODIGO }}</p>
+                                            <p class="item">{{ produtos.PRECOCUSTO.toFixed(2) }}</p>
+                                            <p class="item">{{ produtos.PRECOVENDA.toFixed(2) }}</p>
+                                            <p class="item">{{ produtos.ESTOQUE_ATUAL }}</p>
+                                            <p class="item">{{ produtos.UNIDADE }}</p>
+                                            <p class="item">{{ produtos.NOTAFISCAL }}</p>
+                                        </li>
+                                    </ul>
+                                    <div id="pagination"></div>
+                                </div>
+                              </section> -->
+                        </div>
+                    </div>
+                    <!-- <div class="box">
+                        <div class="box-header">
+                            <h4 id="dias">Entregas nos ultimos 7 dias</h4>
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <div class="box-content">
+                            <div class="chart-container">
+                                <canvas id="graficoEntregas"></canvas>
+                            </div>
+                            <button class="export-button" data-report="entregas">Exportar relatorio <i class="fas fa-file-download"></i></button>
+                        </div>
+                    </div> -->
                 </div>
             </div>
+            <div id="tab-caixa" class="tab-content" style="display:none;">
+                <div class="cabecalho">
+                    <div class="primary-info">
+                        <div class="info-header">
+                            <p>Visitas Hoje</p>
+                            <h2>342</h2>
+                        </div>
+                        <div class="background-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="primary-info">
+                        <div class="info-header">
+                            <p>Entregas</p>
+                            <h2>54</h2>
+                        </div>
+                        <div class="background-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                    </div>
+                    <div class="primary-info">
+                        <div class="info-header">
+                            <p>Entregas</p>
+                            <h2>54</h2>
+                        </div>
+                        <div class="background-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                    </div>
+                    <div class="primary-info">
+                        <div class="info-header">
+                            <p>Solicitações</p>
+                            <h2>12</h2>
+                        </div>
+                        <div class="background-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="principal">
+                    <div class="box">
+                        <div class="box-header">
+                            <h4 id="dias">Visitas nos ultimos 7 dias</h4>
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="box-content">
+                            <section class="user-container">
+                                <div class="user-div-title">
+                                    <h1>Histórico de Caixa</h1>
+                                </div>
+                                <div class="user-grid">
+                                    <div class="user-grid-item">Nome</div>
+                                    <div class="user-grid-item">Casa</div>
+                                    <div class="user-grid-item">Estabelecimento</div>
+                                    <div class="user-grid-item">Codigo</div>
+                                    <div class="user-grid-item">Chegou a entrega?</div>
+                                </div>
+                                <div class="container">
+                                    <ul class="user-list" id="moradorLista" v-for="(caixa, index) in caixaData">
+                                        <li id="moradorItem" class="item-list">
+                                            <p class="item">{{caixa.TIPO_MOVIMENTO}}</p>
+                                            <p class="item">{{caixa.TIPO_MOVIMENTO}}</p>
+                                            <p class="item">{{caixa.TIPO_MOVIMENTO}}</p>
+                                            <p class="item">{{caixa.TIPO_MOVIMENTO}}</p>
+                                            <p class="item">{{caixa.TIPO_MOVIMENTO}}</p>
+                                        </li>
+                                    </ul>
+                                    <div id="pagination"></div>
+                                </div>
+                              </section>
+                        </div>
+                    </div>
+                    <!-- <div class="box">
+                        <div class="box-header">
+                            <h4 id="dias">Entregas nos ultimos 7 dias</h4>
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <div class="box-content">
+                            <div class="chart-container">
+                                <canvas id="graficoEntregas"></canvas>
+                            </div>
+                            <button class="export-button" data-report="entregas">Exportar relatorio <i class="fas fa-file-download"></i></button>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+           <!-- <div class="cabecalho">
+               <div class="primary-info">
+                   <div class="info-header">
+                       <p>Visitas Hoje</p>
+                       <h2>342</h2>
+                   </div>
+                   <div class="background-icon">
+                       <i class="fas fa-users"></i>
+                   </div>
+               </div>
+               <div class="primary-info">
+                   <div class="info-header">
+                       <p>Entregas</p>
+                       <h2>54</h2>
+                   </div>
+                   <div class="background-icon">
+                       <i class="fas fa-boxes"></i>
+                   </div>
+               </div>
+               <div class="primary-info">
+                   <div class="info-header">
+                       <p>Entregas</p>
+                       <h2>54</h2>
+                   </div>
+                   <div class="background-icon">
+                       <i class="fas fa-boxes"></i>
+                   </div>
+               </div>
+               <div class="primary-info">
+                   <div class="info-header">
+                       <p>Solicitações</p>
+                       <h2>12</h2>
+                   </div>
+                   <div class="background-icon">
+                       <i class="fas fa-exclamation-circle"></i>
+                   </div>
+               </div>
+           </div>
+           <div class="principal">
+               <div class="box">
+                   <div class="box-header">
+                       <h4 id="dias">Visitas nos ultimos 7 dias</h4>
+                       <i class="fas fa-users"></i>
+                   </div>
+                   <div class="box-content">
+                       <div class="chart-container">
+                           <canvas id="graficoVisitas"></canvas>
+                       </div>
+                       <button class="export-button" data-report="visitas">Exportar relatorio <i class="fas fa-file-download"></i></button>
+                   </div>
+               </div>
+               <div class="box">
+                   <div class="box-header">
+                       <h4 id="dias">Entregas nos ultimos 7 dias</h4>
+                       <i class="fas fa-boxes"></i>
+                   </div>
+                   <div class="box-content">
+                       <div class="chart-container">
+                           <canvas id="graficoEntregas"></canvas>
+                       </div>
+                       <button class="export-button" data-report="entregas">Exportar relatorio <i class="fas fa-file-download"></i></button>
+                   </div>
+               </div>
+           </div> -->
+           <div class="rodape">
+               <div class="box">
+                   <h3></h3>
+                   <p></p>
+               </div>
+           </div>
+       </div> 
 
         
                 
     </div>
         
     
-  
+    <script src="./js/gridVictor.js"></script>
     <script src="./js/grafico.js"></script>
+    <script src="./js/navTabs.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script src="./js/vueDashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>
+
+
