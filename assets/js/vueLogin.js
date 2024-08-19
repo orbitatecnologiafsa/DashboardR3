@@ -1,4 +1,4 @@
-const URL = 'https://dashboardr3.onrender.com';
+const URL = '127.0.0.1';
 new Vue({
     el: '#app',
     data: {
