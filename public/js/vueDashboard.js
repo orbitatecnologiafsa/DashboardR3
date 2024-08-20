@@ -123,11 +123,8 @@ new Vue({
         });
     }
   },
-  created() {
-      
-},
 mounted() {
-    this.deleteData();
+    
     this.createData();
     
     // Espera até que o Vue tenha montado o DOM e depois cria os gráficos
