@@ -1,4 +1,4 @@
-const URL = 'https://4803-177-8-130-94.ngrok-free.app';
+const URL = 'https://794f-177-8-130-94.ngrok-free.app';
 new Vue({
     el: '#app',
     data: {
