@@ -1,4 +1,4 @@
-const URL = 'https://dashboardr3.onrender.com';
+const URL = 'http://localhost:3001';
 
 new Vue({
   el: '#appDashboard',
@@ -6,6 +6,9 @@ new Vue({
       isLoading: false,
       loadingProgress: 0,
       produtosEstoqueData: [],
+      currentPage: 1,
+      totalPages: 1,
+      itemsPerPage: 10,
       produtosVendidosData: [],
       caixaData: [],
       vendasData: [],
