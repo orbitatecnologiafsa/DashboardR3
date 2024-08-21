@@ -17,7 +17,9 @@ new Vue({
   methods: {
       async createData() {
           const config = {
-              headers: { 'Content-Type': 'Application/json' },
+              headers: { 'Content-Type': 'Application/json',
+                'ngrok-skip-browser-warning': 'true'
+               },
               method: 'GET'
           };
           const response = await fetch(`${URL}/api/dashboard`, config);
@@ -26,7 +28,9 @@ new Vue({
       },
       async deleteData() {
           const config = {
-              headers: { 'Content-Type': 'Application/json' },
+              headers: { 'Content-Type': 'Application/json',
+                'ngrok-skip-browser-warning': 'true'
+               },
               method: 'DELETE'
           };
           const response = await fetch(`${URL}/api/delete`, config);
@@ -36,7 +40,9 @@ new Vue({
 
       async loadDatasProdutos() {
         const config = {
-            headers: { 'Content-Type': 'Application/json' },
+            headers: { 'Content-Type': 'Application/json',
+                'ngrok-skip-browser-warning': 'true'
+             },
             method: 'GET'
         }
         const response = await fetch(`${URL}/api/dashboardProdutos`, config);
@@ -46,7 +52,9 @@ new Vue({
       },
       async loadDatasCaixa() {
         const config = {
-            headers: { 'Content-Type': 'Application/json' },
+            headers: { 'Content-Type': 'Application/json',
+                'ngrok-skip-browser-warning': 'true'
+             },
             method: 'GET'
         }
         const response = await fetch(`${URL}/api/dashboardCaixa`, config);
@@ -56,7 +64,9 @@ new Vue({
       },
       async loadDatasVendas() {
         const config = {
-            headers: { 'Content-Type': 'Application/json' },
+            headers: { 'Content-Type': 'Application/json',
+                'ngrok-skip-browser-warning': 'true'
+             },
             method: 'GET'
         }
         const response = await fetch(`${URL}/api/dashboardVendas`, config);
@@ -66,7 +76,9 @@ new Vue({
       },
       async loadDatasItensVenda() {
         const config = {
-            headers: { 'Content-Type': 'Application/json' },
+            headers: { 'Content-Type': 'Application/json',
+                'ngrok-skip-browser-warning': 'true'
+             },
             method: 'GET'
         }
         const response = await fetch(`${URL}/api/dashboardItensVenda`, config);
