@@ -180,8 +180,8 @@
                                   <tr>
                                     <th scope="row">{{ produtos.CODIGO }}</th>
                                     <td>{{ produtos.PRODUTO }}</td>
-                                    <td>{{ produtos.PRECOCUSTO.toFixed(2) }}</td>
-                                    <td>{{ produtos.PRECOVENDA.toFixed(2) }}</td>
+                                    <td>{{ typeof produtos.PRECOCUSTO === 'number' && !isNaN(produtos.PRECOCUSTO) ? produtos.PRECOCUSTO.toFixed(2) : '0.00' }}</td>
+                                    <td>{{ typeof produtos.PRECOVENDA === 'number' && !isNaN(produtos.PRECOVENDA) ? produtos.PRECOVENDA.toFixed(2) : '0.00' }}</td>
                                     <td>{{ produtos.ESTOQUE_ATUAL }}</td>
                                     <td>{{ produtos.UNIDADE }}</td>
                                     <td>{{ produtos.NOTAFISCAL }}</td>
