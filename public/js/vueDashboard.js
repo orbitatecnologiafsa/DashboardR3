@@ -38,17 +38,25 @@ new Vue({
           console.log(data);
       },
 
-      async loadDatasProdutos() {
+    async loadDatasProdutos(page = 1) {
+        this.isLoading = true;
         const config = {
-            headers: { 'Content-Type': 'Application/json',
-                'ngrok-skip-browser-warning': 'true'
-             },
-            method: 'GET'
-        }
-        const response = await fetch(`${URL}/api/dashboardProdutos`, config);
-        const data = await response.json();
+          headers: { 'Content-Type': 'Application/json' },
+          method: 'GET'
+        };
+  
+        const response = await fetch(`${URL}/api/dashboardProdutos?page=${page}&limit=${this.itemsPerPage}`, config);
+        const { data, totalPages, currentPage } = await response.json();
+  
         this.produtosEstoqueData = data;
-        console.log(this.produtosEstoqueData);
+        this.totalPages = totalPages;
+        this.currentPage = currentPage;
+        this.isLoading = false;
+      },
+      goToPage(page) {
+        if (page >= 1 && page <= this.totalPages) {
+          this.loadDatasProdutos(page);
+        }
       },
       async loadDatasCaixa() {
         const config = {

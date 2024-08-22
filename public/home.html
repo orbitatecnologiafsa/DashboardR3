@@ -188,59 +188,15 @@
                                   </tr>
                                 </tbody>
                               </table>
-                              <!-- <p class="item">{{ produtos.PRODUTO }}</p>
-                                            <p class="item">{{ produtos.CODIGO }}</p>
-                                            <p class="item">{{ produtos.PRECOCUSTO.toFixed(2) }}</p>
-                                            <p class="item">{{ produtos.PRECOVENDA.toFixed(2) }}</p>
-                                            <p class="item">{{ produtos.ESTOQUE_ATUAL }}</p>
-                                            <p class="item">{{ produtos.UNIDADE }}</p>
-                                            <p class="item">{{ produtos.NOTAFISCAL }}</p> -->
-
-
-
-
-                            <!-- <section class="user-container">
-                                <div class="user-div-title">
-                                    <h1>Histórico de Caixa</h1>
-                                </div>
-                                <div class="user-grid">
-                                    <div class="user-grid-item">Nome</div>
-                                    <div class="user-grid-item">Codigo</div>
-                                    <div class="user-grid-item">Prç. Custo</div>
-                                    <div class="user-grid-item">Prç. Venda</div>
-                                    <div class="user-grid-item">Estoque Atual</div>
-                                    <div class="user-grid-item">Medida</div>
-                                    <div class="user-grid-item">Nota fiscal</div>
-                                </div>
-                                <div class="container">
-                                    <ul class="user-list" id="moradorLista" v-for="(produtos, index) in produtosEstoqueData">
-                                        <li id="moradorItem" class="item-list">
-                                            <p class="item">{{ produtos.PRODUTO }}</p>
-                                            <p class="item">{{ produtos.CODIGO }}</p>
-                                            <p class="item">{{ produtos.PRECOCUSTO.toFixed(2) }}</p>
-                                            <p class="item">{{ produtos.PRECOVENDA.toFixed(2) }}</p>
-                                            <p class="item">{{ produtos.ESTOQUE_ATUAL }}</p>
-                                            <p class="item">{{ produtos.UNIDADE }}</p>
-                                            <p class="item">{{ produtos.NOTAFISCAL }}</p>
-                                        </li>
-                                    </ul>
-                                    <div id="pagination"></div>
-                                </div>
-                              </section> -->
+                              <div v-if="totalPages > 1">
+                                <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Anterior</button>
+                                <span>Página {{ currentPage }} de {{ totalPages }}</span>
+                                <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Próxima</button>
+                              </div>
+                              
                         </div>
                     </div>
-                    <!-- <div class="box">
-                        <div class="box-header">
-                            <h4 id="dias">Entregas nos ultimos 7 dias</h4>
-                            <i class="fas fa-boxes"></i>
-                        </div>
-                        <div class="box-content">
-                            <div class="chart-container">
-                                <canvas id="graficoEntregas"></canvas>
-                            </div>
-                            <button class="export-button" data-report="entregas">Exportar relatorio <i class="fas fa-file-download"></i></button>
-                        </div>
-                    </div> -->
+
                 </div>
             </div>
             <div id="tab-caixa" class="tab-content" style="display:none;">
