@@ -41,7 +41,10 @@ new Vue({
     async loadDatasProdutos(page = 1) {
         this.isLoading = true;
         const config = {
-          headers: { 'Content-Type': 'Application/json' },
+          headers: { 
+            'Content-Type': 'Application/json',
+            'ngrok-skip-browser-warning': 'true',
+        },
           method: 'GET'
         };
   
