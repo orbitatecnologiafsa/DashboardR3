@@ -131,16 +131,16 @@ new Vue({
   
 mounted() {
     
-    this.createData();
+    
     
     // Espera até que o Vue tenha montado o DOM e depois cria os gráficos
-    this.$nextTick(() => {
+    
         this.createGraficoVisitas();
         this.createGraficoEntregas();
         this.loadDatasProdutos();
         this.loadDatasCaixa();
         this.loadDatasVendas();
         this.loadDatasItensVenda();
-    });
+  
   }
 });
