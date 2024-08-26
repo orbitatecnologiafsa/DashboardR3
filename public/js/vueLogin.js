@@ -8,7 +8,7 @@ new Vue({
     methods: {
         async loginDashboard() {
           const obj = {
-            username: this.login,
+            login: this.login,
             password: this.password
           }
             const config = {
