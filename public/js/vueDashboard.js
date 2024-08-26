@@ -15,9 +15,21 @@ new Vue({
       itensVendaData: [],
   },
   methods: {
-    
-    
-    async loadDatasProdutos(page = 1) {
+
+    async createData() {
+        const config = {
+            headers: { 
+                'Content-Type': 'Application/json',
+                'ngrok-skip-browser-warning': 'true'
+             },
+            method: 'GET'
+        };
+        const response = await fetch(`${URL}/api/dashboard`, config);
+        const data = await response.json();
+        console.log(data);
+    },
+
+     async loadDatasProdutos(page = 1) {
         this.isLoading = true;
         const config = {
           headers: { 
@@ -40,7 +52,7 @@ new Vue({
           this.loadDatasProdutos(page);
         }
       },
-      async loadDatasCaixa() {
+    async loadDatasCaixa() {
         const config = {
             headers: { 
                 'Content-Type': 'Application/json',
@@ -131,16 +143,16 @@ new Vue({
   
 mounted() {
     
-    
+    this.createData();
     
     // Espera até que o Vue tenha montado o DOM e depois cria os gráficos
-    
+    this.$nextTick(() => {
         this.createGraficoVisitas();
         this.createGraficoEntregas();
         this.loadDatasProdutos();
         this.loadDatasCaixa();
         this.loadDatasVendas();
         this.loadDatasItensVenda();
-  
+    });
   }
 });
