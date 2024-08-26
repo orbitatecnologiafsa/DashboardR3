@@ -1,4 +1,4 @@
-const URL = 'https://f0c6-177-8-130-94.ngrok-free.app';
+const URL = 'https://f0c6-177-8-130-94.ngrok-free.app ';
 
 new Vue({
   el: '#appDashboard',
@@ -15,29 +15,8 @@ new Vue({
       itensVendaData: [],
   },
   methods: {
-      async createData() {
-          const config = {
-              headers: { 'Content-Type': 'Application/json',
-                'ngrok-skip-browser-warning': 'true'
-               },
-              method: 'GET'
-          };
-          const response = await fetch(`${URL}/api/dashboard`, config);
-          const data = await response.json();
-          console.log(data);
-      },
-      async deleteData() {
-          const config = {
-              headers: { 'Content-Type': 'Application/json',
-                'ngrok-skip-browser-warning': 'true'
-               },
-              method: 'DELETE'
-          };
-          const response = await fetch(`${URL}/api/delete`, config);
-          const data = await response.json();
-          console.log(data);
-      },
-
+    
+    
     async loadDatasProdutos(page = 1) {
         this.isLoading = true;
         const config = {
@@ -47,10 +26,10 @@ new Vue({
         },
           method: 'GET'
         };
-  
+    
         const response = await fetch(`${URL}/api/dashboardProdutos?page=${page}&limit=${this.itemsPerPage}`, config);
         const { data, totalPages, currentPage } = await response.json();
-  
+    
         this.produtosEstoqueData = data;
         this.totalPages = totalPages;
         this.currentPage = currentPage;
@@ -98,7 +77,7 @@ new Vue({
         this.itensVendaData = data;
         console.log(this.itensVendaData);
       },
-    createGraficoVisitas() {
+      createGraficoVisitas() {
         const ctx1 = document.getElementById('graficoVisitas').getContext('2d');
         new Chart(ctx1, {
             type: 'bar',
@@ -146,7 +125,10 @@ new Vue({
             }
         });
     }
+
   },
+      
+  
 mounted() {
     
     this.createData();
