@@ -8,7 +8,7 @@
     font-family: 'Montserrat';
 }
 body{
-    background: linear-gradient(to right, #821A4D, #c41469);
+    background: linear-gradient(to right, #08c9ff, #80d7ff);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,7 +40,7 @@ body{
     margin-top: 10%;
     font-size: 2em;
     text-align: center;
-    color: #821A4D;
+    color:  #08b9ff;
 }
 .left form{
     display: flex;
@@ -55,7 +55,7 @@ body{
     width: 100%;
 }
 .input-login p{
-    color: #821A4D;
+    color:  #08b9ff;
     font-size: 12px;
     margin-top: 5%;
     font-weight: 600;
@@ -63,15 +63,15 @@ body{
     text-decoration: underline;
 }
 .left form label{
-    color: #821A4D;
+    color: #08b9ff;
 }
-.left form input[type="email"]{
+.left form input[type="text"]{
     width: 100%;
     height: 30px;
     border: none;
     outline: none;
     font-weight: bold;
-    border-bottom: 1px solid #821A4D;
+    border-bottom: 1px solid #08b9ff;
     margin-bottom: 7.5%;
 }
 .left form input[type="password"]{
@@ -90,7 +90,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #821A4D;
+    border-bottom: 1px solid #08b9ff;
 }
 #olhinhos-azuis {
     width: 25px;
@@ -103,7 +103,7 @@ body{
 #btn-login{
     margin-top: 20%;
     width: 100%;
-    background-color: #821A4D;
+    background-color: #08b9ff;
     color: white;
     padding: 10px 0;
     border: none;
@@ -124,8 +124,8 @@ span{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: #821A4D;
-    color: white;
+    background-color: #08b9ff;
+    color: rgb(255, 255, 255);
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }

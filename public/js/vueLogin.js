@@ -1,4 +1,4 @@
-const URL = 'https://794f-177-8-130-94.ngrok-free.app';
+const URL = 'https://f0c6-177-8-130-94.ngrok-free.app';
 new Vue({
     el: '#app',
     data: {
@@ -19,7 +19,7 @@ new Vue({
                 method: 'POST',
                 body: JSON.stringify(obj)
             }
-            const response = await fetch(`${URL}/api/login`, config);
+            const response = await fetch(`${URL}/`, config);
             const data = await response.json();
             console.log(data);
 
@@ -32,3 +32,6 @@ new Vue({
     }
 })
                 
+
+
+"Faça com que ao logar,"

@@ -1,4 +1,4 @@
-const URL = 'https://794f-177-8-130-94.ngrok-free.app';
+const URL = 'https://f0c6-177-8-130-94.ngrok-free.app';
 
 new Vue({
   el: '#appDashboard',
@@ -63,7 +63,8 @@ new Vue({
       },
       async loadDatasCaixa() {
         const config = {
-            headers: { 'Content-Type': 'Application/json',
+            headers: { 
+                'Content-Type': 'Application/json',
                 'ngrok-skip-browser-warning': 'true'
              },
             method: 'GET'
