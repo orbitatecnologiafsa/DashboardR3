@@ -14,7 +14,6 @@ new Vue({
             const config = {
                 headers: {
                     'Content-Type': 'Application/json',
-                    
                     'ngrok-skip-browser-warning': 'true'
                 },
                 method: 'POST',
