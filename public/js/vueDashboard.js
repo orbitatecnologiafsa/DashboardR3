@@ -11,8 +11,10 @@ new Vue({
       itemsPerPage: 10,
       produtosVendidosData: [],
       caixaData: [],
+      DataCaixa: [],
       vendasData: [],
       itensVendaData: [],
+
   },
   methods: {
 
@@ -66,6 +68,7 @@ new Vue({
         const response = await fetch(`${URL}/api/dashboardCaixa`, config);
         const data = await response.json();
         this.caixaData = data;
+        this.DataCaixa = this.caixaData.data
         console.log(this.caixaData.data);
       },
     async loadDatasVendas() {
