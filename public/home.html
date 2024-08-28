@@ -270,11 +270,6 @@
                                       </tr>
                                     </tbody>
                                 </table>
-                                <div v-if="totalPages > 1">
-                                    <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Anterior</button>
-                                    <span>Página {{ currentPage }} de {{ totalPages }}</span>
-                                    <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Próxima</button>
-                                </div>
                             </div>
                         </div>
                     </div>
