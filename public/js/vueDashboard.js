@@ -46,7 +46,7 @@ new Vue({
         const response = await fetch(`${URL}/api/dashboardProdutos?page=${page}&limit=${this.itemsPerPage}`, config);
         const { data, totalPages, currentPage } = await response.json();
     
-        this.produtosEstoqueData = data;
+        this.produtosEstoqueData = data.data;
         this.totalPages = totalPages;
         this.currentPage = currentPage;
         this.isLoading = false;
@@ -81,7 +81,7 @@ new Vue({
         }
         const response = await fetch(`${URL}/api/dashboardVendas`, config);
         const data = await response.json();
-        this.vendasData = data;
+        this.vendasData = data.data;
         console.log(this.vendasData);
       },
     async loadDatasItensVenda() {
@@ -94,7 +94,7 @@ new Vue({
         }
         const response = await fetch(`${URL}/api/dashboardItensVenda`, config);
         const data = await response.json();
-        this.itensVendaData = data;
+        this.itensVendaData = data.data;
         console.log(this.itensVendaData);
       },
     createGraficoVisitas() {
