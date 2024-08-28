@@ -66,7 +66,7 @@ new Vue({
         const response = await fetch(`${URL}/api/dashboardCaixa`, config);
         const data = await response.json();
         this.caixaData = data;
-        console.log(this.caixaData);
+        console.log(this.caixaData.data);
       },
     async loadDatasVendas() {
         const config = {
@@ -143,7 +143,7 @@ new Vue({
         });
     },
 
-    
+
 
     
 
