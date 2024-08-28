@@ -20,7 +20,8 @@ new Vue({
         const config = {
             headers: { 
                 'Content-Type': 'Application/json',
-                'ngrok-skip-browser-warning': 'true'
+                'ngrok-skip-browser-warning': 'true',
+                'Access-Control-Allow-Origin': '*'
              },
             method: 'GET'
         };
@@ -29,12 +30,13 @@ new Vue({
         console.log(data);
     },
 
-     async loadDatasProdutos(page = 1) {
+    async loadDatasProdutos(page = 1) {
         this.isLoading = true;
         const config = {
           headers: { 
             'Content-Type': 'Application/json',
             'ngrok-skip-browser-warning': 'true',
+            'Access-Control-Allow-Origin': '*'
         },
           method: 'GET'
         };
@@ -47,7 +49,7 @@ new Vue({
         this.currentPage = currentPage;
         this.isLoading = false;
       },
-      goToPage(page) {
+    goToPage(page) {
         if (page >= 1 && page <= this.totalPages) {
           this.loadDatasProdutos(page);
         }
@@ -56,7 +58,8 @@ new Vue({
         const config = {
             headers: { 
                 'Content-Type': 'Application/json',
-                'ngrok-skip-browser-warning': 'true'
+                'ngrok-skip-browser-warning': 'true',
+                'Access-Control-Allow-Origin': '*'
              },
             method: 'GET'
         }
@@ -65,10 +68,11 @@ new Vue({
         this.caixaData = data;
         console.log(this.caixaData);
       },
-      async loadDatasVendas() {
+    async loadDatasVendas() {
         const config = {
             headers: { 'Content-Type': 'Application/json',
-                'ngrok-skip-browser-warning': 'true'
+                'ngrok-skip-browser-warning': 'true',
+                'Access-Control-Allow-Origin': '*'
              },
             method: 'GET'
         }
@@ -77,10 +81,11 @@ new Vue({
         this.vendasData = data;
         console.log(this.vendasData);
       },
-      async loadDatasItensVenda() {
+    async loadDatasItensVenda() {
         const config = {
             headers: { 'Content-Type': 'Application/json',
-                'ngrok-skip-browser-warning': 'true'
+                'ngrok-skip-browser-warning': 'true',
+                'Access-Control-Allow-Origin': '*'
              },
             method: 'GET'
         }
@@ -89,7 +94,7 @@ new Vue({
         this.itensVendaData = data;
         console.log(this.itensVendaData);
       },
-      createGraficoVisitas() {
+    createGraficoVisitas() {
         const ctx1 = document.getElementById('graficoVisitas').getContext('2d');
         new Chart(ctx1, {
             type: 'bar',
@@ -114,7 +119,7 @@ new Vue({
     },
     
     // Função para criar o gráfico de entregas
-     createGraficoEntregas() {
+    createGraficoEntregas() {
         const ctx2 = document.getElementById('graficoEntregas').getContext('2d');
         new Chart(ctx2, {
             type: 'bar',
@@ -136,7 +141,11 @@ new Vue({
                 }
             }
         });
-    }
+    },
+
+    
+
+    
 
   },
       

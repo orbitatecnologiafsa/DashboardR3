@@ -245,30 +245,37 @@
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="box-content">
-                            <section class="user-container">
-                                <div class="user-div-title">
-                                    <h1>Histórico de Caixa</h1>
+                            
+                                <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Codigo</th>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Prç. Custo</th>
+                                        <th scope="col">Prç. Venda</th>
+                                        <th scope="col">Estoque Atual</th>
+                                        <th scope="col">Medida</th>
+                                        <th scope="col">Nota fiscal</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody v-for="(caixa, index) in caixaData">
+                                      <tr>
+                                        <th scope="row">{{ caixa.CODCAIXA }}</th>
+                                        <td>{{ caixa.ENTRADA }}</td>
+                                        <td>{{ caixa.SAIDA }}</td>
+                                        <td>{{ caixa.CODOPERADOR }}</td>
+                                        <td>{{ caixa.TIPO_MOVIMENTO }}</td>
+                                        <td>{{ caixa.VALOR }}</td>
+                                        <td>{{ caixa.HISTORICO }}</td>
+                                      </tr>
+                                    </tbody>
+                                </table>
+                                <div v-if="totalPages > 1">
+                                    <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Anterior</button>
+                                    <span>Página {{ currentPage }} de {{ totalPages }}</span>
+                                    <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Próxima</button>
                                 </div>
-                                <div class="user-grid">
-                                    <div class="user-grid-item">Codigo Caixa</div>
-                                    <div class="user-grid-item">Entrada</div>
-                                    <div class="user-grid-item">Saida</div>
-                                    <div class="user-grid-item">Tipo Movimentação</div>
-                                    <div class="user-grid-item">Cod. Operador</div>
-                                </div>
-                                <div class="container">
-                                    <ul class="user-list" id="moradorLista" v-for="(caixa, index) in caixaData">
-                                        <li id="moradorItem" class="item-list">
-                                            <p class="item">{{caixa.CODCAIXA}}</p>
-                                            <p class="item">{{ caixa.ENTRADA }}</p>
-                                            <p class="item">{{ caixa.SAIDA }}</p>
-                                            <p class="item">{{caixa.TIPO_MOVIMENTO}}</p>
-                                            <p class="item">{{caixa.CODOPERADOR}}</p>
-                                        </li>
-                                    </ul>
-                                    <div id="pagination"></div>
-                                </div>
-                              </section>
+                            </div>
                         </div>
                     </div>
                     <!-- <div class="box">
