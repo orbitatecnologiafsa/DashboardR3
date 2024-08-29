@@ -21,14 +21,17 @@
         </div>
         <hr>
         <ul class="nav-links">
-            <div class="nav-item active" data-tab="vendas">
-                <li><i class="fas fa-home"></i>Vendas</li>
+            <div class="nav-item active" data-tab="home">
+                <li><i class="fas fa-home"></i>Inicio</li>
+            </div>
+            <div class="nav-item" data-tab="vendas">
+                <li><i class="fas fa-dollar-sign"></i>Vendas</li>
             </div>
             <div class="nav-item" data-tab="produtos">
-                <li><i class="fas fa-user-clock"></i>Produtos</li>
+                <li><i class="fas fa-boxes"></i>Produtos</li>
             </div>
             <div class="nav-item" data-tab="caixa">
-                <li><i class="fas fa-boxes"></i>Caixa</li>
+                <li><i class="fas fa-cash-register"></i>Caixa</li>
             </div>
         </ul>
     </nav>
@@ -52,7 +55,7 @@
                </search>
    
            </header>
-           <div id="tab-vendas" class="tab-content">
+           <div id="tab-home" class="tab-content">
             <div class="cabecalho">
                 <div class="primary-info">
                     <div class="info-header">
@@ -118,11 +121,94 @@
                 </div>
             </div>
             </div>
+
+           <div id="tab-vendas" class="tab-content" style="display:none;">
+            <div class="cabecalho">
+                <div class="primary-info">
+                    <div class="info-header">
+                        <p>Vendas Hoje</p>
+                        <h2>R$ 1.234,00</h2>
+                    </div>
+                    <div class="background-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="primary-info">
+                    <div class="info-header">
+                        <p>Vendas do mês</p>
+                        <h2>R$ 15.254,20</h2>
+                    </div>
+                    <div class="background-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                </div>
+                <div class="primary-info">
+                    <div class="info-header">
+                        <p>Caixa</p>
+                        <h2>R$ 548,00</h2>
+                    </div>
+                    <div class="background-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                </div>
+                <div class="primary-info">
+                    <div class="info-header">
+                        <p>Estoque</p>
+                        <h2>R$ 1.854,00</h2>
+                    </div>
+                    <div class="background-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="principal">
+                <div class="box">
+                    <div class="box-header">
+                        <h4 id="dias">Vendas dos ultimos 3 meses</h4>
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="box-content">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Codigo</th>
+                                <th scope="col">CFOP</th>
+                                <th scope="col">CODCLIENTE</th>
+                                <th scope="col">MODELO_NF</th>
+                                <th scope="col">TOTAL_NOTA</th>
+                                <th scope="col">VALOR_PRODUTOS</th>
+                                <th scope="col">NOME</th>
+                              </tr>
+                            </thead>
+                            <tbody v-for="(vendas, index) in vendasData" :key="index">
+                                
+                                <tr>
+                                  <th scope="row">{{ vendas.CODIGO }}</th>
+                                  <td>{{ vendas.CFOP }}</td>
+                                  <td>{{ vendas.CODCLIENTE }}</td>
+                                  <td>{{ vendas.NOME }}</td>
+                                  <td>{{ vendas.NOTAFISCAL }}</td>
+                                  <td>{{ typeof vendas.TOTAL_NOTA === 'number' && !isNaN(vendas.TOTAL_NOTA) ? vendas.TOTAL_NOTA.toFixed(2) : '0.00' }}</td>
+                                  <td>{{ typeof vendas.VALOR_PRODUTOS === 'number' && !isNaN(vendas.VALOR_PRODUTOS) ? vendas.VALOR_PRODUTOS.toFixed(2) : '0.00' }}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                          <!-- <div v-if="totalPages > 1">
+                            <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Anterior</button>
+                            <span>Página {{ currentPage }} de {{ totalPages }}</span>
+                            <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Próxima</button>
+                          </div> -->
+                          
+                    </div>
+                </div>
+            </div>
+            </div>
             <div id="tab-produtos" class="tab-content" style="display:none;">
                 <div class="cabecalho">
                     <div class="primary-info">
                         <div class="info-header">
-                            <p>Vendas hoje</p>
+                            <p>Total em Estoque</p>
                             <h2>R$ 1.234,00</h2>
                         </div>
                         <div class="background-icon">
@@ -131,7 +217,7 @@
                     </div>
                     <div class="primary-info">
                         <div class="info-header">
-                            <p>Vendas do mês</p>
+                            <p>Total por preço de Custo</p>
                             <h2>R$ 15.000,00</h2>
                         </div>
                         <div class="background-icon">
@@ -140,14 +226,14 @@
                     </div>
                     <div class="primary-info">
                         <div class="info-header">
-                            <p>Entregas</p>
+                            <p>Total por preço de Venda</p>
                             <h2>54</h2>
                         </div>
                         <div class="background-icon">
                             <i class="fas fa-boxes"></i>
                         </div>
                     </div>
-                    <div class="primary-info">
+                    <!-- <div class="primary-info">
                         <div class="info-header">
                             <p>Solicitações</p>
                             <h2>12</h2>
@@ -155,7 +241,7 @@
                         <div class="background-icon">
                             <i class="fas fa-exclamation-circle"></i>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="principal">
                     <div class="box">
@@ -176,23 +262,25 @@
                                     <th scope="col">Nota fiscal</th>
                                   </tr>
                                 </thead>
-                                <tbody v-for="(produtos, index) in produtosEstoqueData">
-                                  <tr>
-                                    <th scope="row">{{ produtos.CODIGO }}</th>
-                                    <td>{{ produtos.PRODUTO }}</td>
-                                    <td>{{ typeof produtos.PRECOCUSTO === 'number' && !isNaN(produtos.PRECOCUSTO) ? produtos.PRECOCUSTO.toFixed(2) : '0.00' }}</td>
-                                    <td>{{ typeof produtos.PRECOVENDA === 'number' && !isNaN(produtos.PRECOVENDA) ? produtos.PRECOVENDA.toFixed(2) : '0.00' }}</td>
-                                    <td>{{ produtos.ESTOQUE_ATUAL }}</td>
-                                    <td>{{ produtos.UNIDADE }}</td>
-                                    <td>{{ produtos.NOTAFISCAL }}</td>
-                                  </tr>
+                                <tbody v-for="(produtos, index) in produtosEstoqueData" :key="index">
+                                    
+                                    <tr>
+                                      <th scope="row">{{ produtos.CODIGO }}</th>
+                                      <td>{{ produtos.PRODUTO }}</td>
+                                      <td>{{ typeof produtos.PRECOCUSTO === 'number' && !isNaN(produtos.PRECOCUSTO) ? produtos.PRECOCUSTO.toFixed(2) : '0.00' }}</td>
+                                      <td>{{ typeof produtos.PRECOVENDA === 'number' && !isNaN(produtos.PRECOVENDA) ? produtos.PRECOVENDA.toFixed(2) : '0.00' }}</td>
+                                      <td>{{ produtos.ESTOQUE_ATUAL }}</td>
+                                      <td>{{ produtos.UNIDADE }}</td>
+                                      <td>{{ produtos.NOTAFISCAL }}</td>
+                                    </tr>
+
                                 </tbody>
-                              </table>
-                              <div v-if="totalPages > 1">
+                            </table>
+                              <!-- <div v-if="totalPages > 1">
                                 <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Anterior</button>
                                 <span>Página {{ currentPage }} de {{ totalPages }}</span>
                                 <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Próxima</button>
-                              </div>
+                              </div> -->
                               
                         </div>
                     </div>
@@ -203,7 +291,7 @@
                 <div class="cabecalho">
                     <div class="primary-info">
                         <div class="info-header">
-                            <p>Visitas Hoje</p>
+                            <p>Valor em Caixa</p>
                             <h2>342</h2>
                         </div>
                         <div class="background-icon">
@@ -212,7 +300,7 @@
                     </div>
                     <div class="primary-info">
                         <div class="info-header">
-                            <p>Entregas</p>
+                            <p>Entrada</p>
                             <h2>54</h2>
                         </div>
                         <div class="background-icon">
@@ -221,7 +309,7 @@
                     </div>
                     <div class="primary-info">
                         <div class="info-header">
-                            <p>Entregas</p>
+                            <p>Saida</p>
                             <h2>54</h2>
                         </div>
                         <div class="background-icon">
@@ -230,7 +318,7 @@
                     </div>
                     <div class="primary-info">
                         <div class="info-header">
-                            <p>Solicitações</p>
+                            <p>Total Caixa</p>
                             <h2>12</h2>
                         </div>
                         <div class="background-icon">
@@ -259,7 +347,9 @@
                                         <th scope="col">Histórico</th>
                                       </tr>
                                     </thead>
-                                    <tbody v-for="(caixa, index) in DataCaixa">
+                                    <tbody  v-for="(caixa, index) in DataCaixa">
+                                       
+                                        
                                       <tr>
                                         <th scope="row">{{ caixa.CODIGO }}</th>
                                         <td>{{ caixa.CODCAIXA }}</td>
@@ -288,7 +378,9 @@
                         </div>
                     </div> -->
             </div>
-            </div>
+            
+            
+        </div>
           
            <div class="rodape">
                <div class="box">
@@ -303,7 +395,8 @@
     </div>
         
     
-    <script src="./js/gridVictor.js"></script>
+     
+    <!-- <script src="./js/gridVictor.js"></script> -->
     <script src="./js/grafico.js"></script>
     <script src="./js/navTabs.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>

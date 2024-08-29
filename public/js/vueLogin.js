@@ -1,4 +1,4 @@
-const URL = 'https://7143-177-8-130-94.ngrok-free.app';
+const URL = 'http://localhost:3000';
 new Vue({
     el: '#app',
     data: {
@@ -14,17 +14,17 @@ new Vue({
             const config = {
                 headers: {
                     'Content-Type': 'Application/json',
-                    'ngrok-skip-browser-warning': 'true'
+                    
                 },
                 method: 'POST',
                 body: JSON.stringify(obj)
             }
-            const response = await fetch(`${URL}/`, config);
+            const response = await fetch(`${URL}/login`, config);
             const data = await response.json();
             console.log(data);
 
             if (data.success) {
-              window.location.href = data.redirectUrl;  // Redireciona o usuário
+              window.location.href = data.redirectURL;  // Redireciona o usuário
           } else {
               alert(data.message || 'Erro no login');
           }

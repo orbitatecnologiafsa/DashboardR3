@@ -103,3 +103,5 @@ document.querySelectorAll('.export-button').forEach(button => {
         exportToExcel(reportType, labels, data);
     });
 });
+
+

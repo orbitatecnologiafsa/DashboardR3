@@ -1,102 +1,64 @@
-const URL = 'https://7143-177-8-130-94.ngrok-free.app';
+const URL = 'http://localhost:3000';
 
 new Vue({
   el: '#appDashboard',
   data: {
-      isLoading: false,
-      loadingProgress: 0,
-      produtosEstoqueData: [],
-      currentPage: 1,
-      totalPages: 1,
-      itemsPerPage: 10,
-      produtosVendidosData: [],
-      caixaData: [],
-      DataCaixa: [],
-      vendasData: [],
-      itensVendaData: [],
-
+    isLoading: false,
+    loadingProgress: 0,
+    produtosEstoqueData: [],
+    currentPage: 1,
+    totalPages: 1,
+    itemsPerPage: 10,
+    produtosVendidosData: [],
+    caixaData: [],
+    DataCaixa: [],
+    vendasData: [],
+    itensVendaData: [],
   },
   methods: {
 
-    async createData() {
+    async getDashboardData() {
         const config = {
-            headers: { 
+            headers: {
                 'Content-Type': 'Application/json',
-                'ngrok-skip-browser-warning': 'true',
-                'Access-Control-Allow-Origin': '*'
-             },
-            method: 'GET'
+            },
+            method: 'GET',
         };
-        const response = await fetch(`${URL}/api/dashboard`, config);
+        const response = await fetch(`${URL}/dashboard`, config);
         const data = await response.json();
-        console.log(data);
+        this.produtosEstoqueData = data;
+        console.log(this.produtosEstoqueData);
+        
     },
 
-    async loadDatasProdutos(page = 1) {
-        this.isLoading = true;
+    async getDashboardVendasData() {
         const config = {
-          headers: { 
-            'Content-Type': 'Application/json',
-            'ngrok-skip-browser-warning': 'true',
-            'Access-Control-Allow-Origin': '*'
-        },
-          method: 'GET'
-        };
-    
-        const response = await fetch(`${URL}/api/dashboardProdutos?page=${page}&limit=${this.itemsPerPage}`, config);
-        const { data, totalPages, currentPage } = await response.json();
-    
-        this.produtosEstoqueData = data.data;
-        this.totalPages = totalPages;
-        this.currentPage = currentPage;
-        this.isLoading = false;
-      },
-    goToPage(page) {
-        if (page >= 1 && page <= this.totalPages) {
-          this.loadDatasProdutos(page);
-        }
-      },
-    async loadDatasCaixa() {
-        const config = {
-            headers: { 
+            headers: {
                 'Content-Type': 'Application/json',
-                'ngrok-skip-browser-warning': 'true',
-                'Access-Control-Allow-Origin': '*'
-             },
-            method: 'GET'
+            },
+            method: 'GET',
+        };
+        const response = await fetch(`${URL}/dashboardVendas`, config);
+        const data = await response.json();
+        this.vendasData = data;
+        console.log(this.vendasData);
+    },
+
+    async getDashboardCaixa(){
+        const config = {
+            headers: {
+                'Content-Type': 'Application/json',
+            },
+            method: 'GET',
         }
-        const response = await fetch(`${URL}/api/dashboardCaixa`, config);
+        const response = await fetch(`${URL}/dashboardCaixa`, config);
         const data = await response.json();
         this.caixaData = data;
-        this.DataCaixa = this.caixaData.data
-        console.log(this.caixaData.data);
-      },
-    async loadDatasVendas() {
-        const config = {
-            headers: { 'Content-Type': 'Application/json',
-                'ngrok-skip-browser-warning': 'true',
-                'Access-Control-Allow-Origin': '*'
-             },
-            method: 'GET'
-        }
-        const response = await fetch(`${URL}/api/dashboardVendas`, config);
-        const data = await response.json();
-        this.vendasData = data.data;
-        console.log(this.vendasData);
-      },
-    async loadDatasItensVenda() {
-        const config = {
-            headers: { 'Content-Type': 'Application/json',
-                'ngrok-skip-browser-warning': 'true',
-                'Access-Control-Allow-Origin': '*'
-             },
-            method: 'GET'
-        }
-        const response = await fetch(`${URL}/api/dashboardItensVenda`, config);
-        const data = await response.json();
-        this.itensVendaData = data.data;
-        console.log(this.itensVendaData);
-      },
+        console.log(this.caixaData);
+    },
+
+
+
     createGraficoVisitas() {
         const ctx1 = document.getElementById('graficoVisitas').getContext('2d');
         new Chart(ctx1, {
@@ -145,26 +107,18 @@ new Vue({
             }
         });
     },
-
-
-
-    
-
   },
-      
-  
-mounted() {
-    
-    this.createData();
-    
-    // Espera até que o Vue tenha montado o DOM e depois cria os gráficos
+  mounted() {
+    this.getDashboardData();
+    this.getDashboardVendasData();
+    this.getDashboardCaixa();
     this.$nextTick(() => {
         this.createGraficoVisitas();
         this.createGraficoEntregas();
-        this.loadDatasProdutos();
-        this.loadDatasCaixa();
-        this.loadDatasVendas();
-        this.loadDatasItensVenda();
-    });
-  }
+        
+    })
+  },
+      
+  
+
 });
