@@ -1,4 +1,4 @@
-import { getUserDbId, currentUser, getVendasDb } from '../../server/firebase.js';
+import { getUserDbId, currentUser, getVendasDb, getCaixaDb, getProdutosDb } from '../../server/firebase.js';
 
 
 const URL = 'http://localhost:3000';
@@ -16,10 +16,20 @@ new Vue({
     DataCaixa: [],
     vendasData: [],
     itensVendaData: [],
-    vendas: []
+    vendas: [],
+    searchVendas: '',
   },
   methods: {
-
+    pesquisarProduto(val){
+        this.search = val;
+        console.log(this.search);
+        console.log(val);
+        if (this.search.length === 0 ) {
+          this.prencherVendas();
+        } else {
+          this.vendasData = this.vendasData.filter(item => item.nome.toLowerCase().includes(this.search.toLowerCase()));
+        }
+      },
 
     async prencherVendas(){
 
@@ -39,45 +49,41 @@ new Vue({
         }
     },
 
+    
     async getDashboardData() {
-        const config = {
-            headers: {
-                'Content-Type': 'Application/json',
-            },
-            method: 'GET',
-        };
-        const response = await fetch(`${URL}/dashboard`, config);
-        const data = await response.json();
-        this.produtosEstoqueData = data;
-        console.log(this.produtosEstoqueData);
+        try {
+            const user = await currentUser();
+            if (user) {
+                const userEmail = user.email;
+                const dbId = await getUserDbId(userEmail);
+
+                const caixa = await getCaixaDb(dbId);
+                this.DataCaixa = caixa;
+            }
+        } catch (error) {
+            
+        }
         
     },
 
-    async getDashboardVendasData() {
-        const config = {
-            headers: {
-                'Content-Type': 'Application/json',
-            },
-            method: 'GET',
-        };
-        const response = await fetch(`${URL}/dashboardVendas`, config);
-        const data = await response.json();
-        this.vendasData = data;
-        console.log(this.vendasData);
+    async getProdutosEstoque() {
+        try {
+            const user = await currentUser();
+            if (user) {
+                const userEmail = user.email;
+                const dbId = await getUserDbId(userEmail);
+                
+                const estoque = await getProdutosDb(dbId);
+                this.produtosEstoqueData = estoque;
+            } else {
+                console.error("Usuário não encontrado.");
+            }
+        } catch (error) {
+            console.error("Erro ao obter o usuário:", error);
+        }
     },
 
-    async getDashboardCaixa(){
-        const config = {
-            headers: {
-                'Content-Type': 'Application/json',
-            },
-            method: 'GET',
-        }
-        const response = await fetch(`${URL}/dashboardCaixa`, config);
-        const data = await response.json();
-        this.DataCaixa = data;
-        console.log(this.DataCaixa);
-    },
+    
 
 
 
@@ -132,7 +138,14 @@ new Vue({
   },
   mounted() {
     this.prencherVendas();
+    this.getDashboardData();
+    this.getProdutosEstoque();
+    // this.createGraficoVisitas();
+    // this.createGraficoEntregas();
   },
+  watch: {
+    search: 'pesquisarProduto'
+  }
       
   
 

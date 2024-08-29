@@ -99,3 +99,69 @@ export async function getVendasDb(doc_id) {
     throw error; 
   }
 }
+
+export async function getCaixaDb(doc_id) {
+  try {
+  
+    const empresaDocRef = doc(db, 'empresas', doc_id);
+
+    const vendasCollectionRef = collection(empresaDocRef, 'caixa');
+
+    const querySnapshot = await getDocs(vendasCollectionRef);
+
+    const vendas = querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        CODIGO: data.CODIGO,
+        CODCAIXA: data.CODCAIXA,
+        ENTRADA: data.ENTRADA,
+        SAIDA: data.SAIDA,
+        TIPO_MOVIMENTO: data.TIPO_MOVIMENTO,
+        DATA: converterData(data.DATA), // Converter timestamp para DD-MM-YYYY
+        VALOR: data.VALOR,
+        CODIGO_VENDA: data.CODIGO_VENDA
+
+        
+      };
+    });
+
+    return vendas;
+  } catch (error) {
+    console.error("Erro ao obter documentos da subcoleção 'vendas':", error);
+    throw error; 
+  }
+}
+
+export async function getProdutosDb(doc_id) {
+  try {
+  
+    const empresaDocRef = doc(db, 'empresas', doc_id);
+
+    const vendasCollectionRef = collection(empresaDocRef, 'produtosEstoque');
+
+    const querySnapshot = await getDocs(vendasCollectionRef);
+
+    const vendas = querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        CODIGO: data.CODIGO,
+        ESTOQUE_ATUAL: data.ESTOQUE_ATUAL,
+        NOTAFISCAL: data.NOTAFISCAL,
+        PRECOCUSTO: data.PRECOCUSTO,
+        PRECOVENDA: data.PRECOVENDA,
+        PRODUTO: data.PRODUTO, // Converter timestamp para DD-MM-YYYY
+        UNIDADE: data.UNIDADE,
+        CODBARRA: data.CODBARRA
+
+        
+      };
+    });
+
+    return vendas;
+  } catch (error) {
+    console.error("Erro ao obter documentos da subcoleção 'vendas':", error);
+    throw error; 
+  }
+}
