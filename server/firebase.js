@@ -1,14 +1,15 @@
-// firebase.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
 
-const admin = require('firebase-admin');
+//Sem o db ainda !
 
-// Substitua pelo caminho para o seu arquivo de chave privada do Firebase
-const serviceAccount = require('./prototiposincronizador-firebase-adminsdk-dtshh-58f592890f.json');
+const firebaseConfig = {
+  apiKey: "AIzaSyD1KxGa3u3kX1lGKbr6nN2_5gr8MTVl5zM",
+  authDomain: "prototiposincronizador.firebaseapp.com",
+  projectId: "prototiposincronizador",
+  storageBucket: "prototiposincronizador.appspot.com",
+  messagingSenderId: "761543687418",
+  appId: "1:761543687418:web:9ea382bb1b4494461d9d43"
+};
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
-
-const db = admin.firestore();
-
-module.exports = db; 
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
