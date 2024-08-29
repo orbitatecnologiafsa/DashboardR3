@@ -46,13 +46,13 @@
                    </ol>
                    <h4 style="margin: 0px 7px;">Painel de controle</h4>
                </div>
-               <search>
+               <!-- <search>
                    <form action="#" method="GET" id="searchForm">
                        <label class="searchLabelWrap">
                            <input type="search" autocomplete="off" placeholder="Pesquisar..." class="searchInput" name="s">
                        </label>
                    </form>
-               </search>
+               </search> -->
    
            </header>
            <div id="tab-home" class="tab-content">
@@ -166,6 +166,15 @@
                     <div class="box-header">
                         <h4 id="dias">Vendas dos ultimos 3 meses</h4>
                         <i class="fas fa-users"></i>
+                        <search>
+                            <form action="#" method="GET" id="searchForm">
+                                <label class="searchLabelWrap">
+                                    <input type="search" autocomplete="off" placeholder="Pesquisar..." class="searchInput" name="s">
+                                </label>
+                            </form>
+                        </search>
+                        De: <input type="date" name="date" id="">
+                        Até: <input type="date" name="date" id="">
                     </div>
                     <div class="box-content">
                         <table class="table">
@@ -248,6 +257,13 @@
                         <div class="box-header">
                             <h4 id="dias">Produtos em estoque</h4>
                             <i class="fas fa-users"></i>
+                            <search>
+                                <form action="#" method="GET" id="searchForm">
+                                    <label class="searchLabelWrap">
+                                        <input type="search" autocomplete="off" placeholder="Pesquisar..." class="searchInput" name="s">
+                                    </label>
+                                </form>
+                            </search>
                         </div>
                         <div class="box-content">
                             <table class="table">
@@ -332,6 +348,8 @@
                             <h4 id="dias">Operações de caixa</h4>
                             <i class="fas fa-users"></i>
                         </div>
+                        De: <input type="date" name="date" id="">
+                        Até: <input type="date" name="date" id="">
                         <div class="box-content">
                             
                                 <table class="table">

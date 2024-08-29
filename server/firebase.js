@@ -1,4 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import { } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js';
+import { } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js';
+import { } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js';
 
 //Sem o db ainda !
 
@@ -13,3 +16,5 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+export { app };

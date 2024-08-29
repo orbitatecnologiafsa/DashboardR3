@@ -164,13 +164,31 @@ nav .nav-links .searchLabelWrap {
 	background: white;
 	border: 1px solid rgb(192, 192, 192);
 	border-radius: 15px;
-	padding: 15px;
+	padding: 7px;
 	font: inherit;
 }
 
 .searchInput:focus {
 	border-color: var(--primary-color);
     box-shadow: inset 0 1px 4px #ffaadb, 0 0 20px 2px #821a4c28;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+	display: none;
+}
+
+input[type="date"] {
+	box-shadow: var(--box-shadow);
+	border: 0;
+	outline: 0;
+	background: white;
+	border: 1px solid rgb(192, 192, 192);
+	border-radius: 15px;
+	padding: 7px;
+	font: inherit;
 }
 
 header {
