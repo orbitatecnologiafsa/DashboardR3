@@ -169,7 +169,7 @@
                     </div>
                     <div class="box-content" >
                         <table class="table" >
-                            <thead class="titulo">
+                            <thead>
                               <tr>
                                 <th scope="col">Codigo</th>
                                 <th scope="col">CFOP</th>
@@ -182,7 +182,6 @@
                               </tr>
                             </thead>
                             <tbody v-for="(vendas, index) in vendasData" :key="index">
-                                
                                 <tr class="table-light">
                                   <th scope="row">{{ vendas.CODIGO }}</th>
                                   <td>{{ vendas.CFOP }}</td>
@@ -197,12 +196,7 @@
 
                             </tbody>
                         </table>
-                          <!-- <div v-if="totalPages > 1">
-                            <button @click="goToPage(currentPage - 1)" :disabled="currentPage === 1">Anterior</button>
-                            <span>Página {{ currentPage }} de {{ totalPages }}</span>
-                            <button @click="goToPage(currentPage + 1)" :disabled="currentPage === totalPages">Próxima</button>
-                          </div> -->
-                          
+    
                     </div>
                 </div>
             </div>
@@ -335,10 +329,7 @@
                             <h4 id="dias">Operações de caixa</h4>
                             <i class="fas fa-users"></i>
                         </div>
-                        <div class="box-content">
-                            
-                                <table class="table">
-                                    <thead>
+                         <thead>
                                       <tr>
                                         <th scope="col">Codigo</th>
                                         <th scope="col">Cod. Caixa</th>
@@ -350,6 +341,9 @@
                                         <th scope="col">Histórico</th>
                                       </tr>
                                     </thead>
+                        <div class="box-content">
+                                <table class="table">
+                                   
                                     <tbody  v-for="(caixa, index) in DataCaixa">
                                        
                                         
@@ -385,12 +379,6 @@
             
         </div>
           
-           <div class="rodape">
-               <div class="box">
-                   <h3></h3>
-                   <p></p>
-               </div>
-           </div>
        </div> 
 
         
