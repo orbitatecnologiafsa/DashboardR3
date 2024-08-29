@@ -254,6 +254,7 @@ header input {
 .conteudo {
 	flex: 1;
 	padding: 20px;
+	height: fit-content;
 }
 
 .cabecalho {
@@ -543,7 +544,24 @@ a:active {
 .icon{
   width: 50px;
 }
-.box-content{
-	height: 60%;
-	overflow-y: auto;
+.box{
+	height: 60vh;
+}
+.box-content {
+    height: 80%;
+    overflow-y: auto;
+    position: relative;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #fff; /* Cor de fundo para o cabeçalho */
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); /* Pequena sombra para o efeito de destaque */
 }

@@ -2,7 +2,6 @@
 
 export function converterData(data_user) {
 
-    console.log(data_user);
     // Se o timestamp estiver em segundos, converta para milissegundos
   const timestampEmMilissegundos = (data_user.seconds || data_user) * 1000;
   
