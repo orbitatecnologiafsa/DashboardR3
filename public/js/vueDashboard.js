@@ -1,3 +1,6 @@
+import { getUserDbId, currentUser, getVendasDb } from '../../server/firebase.js';
+
+
 const URL = 'http://localhost:3000';
 
 new Vue({
@@ -13,8 +16,28 @@ new Vue({
     DataCaixa: [],
     vendasData: [],
     itensVendaData: [],
+    vendas: []
   },
   methods: {
+
+
+    async prencherVendas(){
+
+        try {
+            const user = await currentUser();
+            if (user) {
+                const userEmail = user.email;
+                const dbId = await getUserDbId(userEmail);
+                
+                const vendas = await getVendasDb(dbId);
+                this.vendasData = vendas;
+            } else {
+                console.error("Usuário não encontrado.");
+            }
+        } catch (error) {
+            console.error("Erro ao obter o usuário:", error);
+        }
+    },
 
     async getDashboardData() {
         const config = {
@@ -108,14 +131,7 @@ new Vue({
     },
   },
   mounted() {
-    this.getDashboardData();
-    this.getDashboardVendasData();
-    this.getDashboardCaixa();
-    this.$nextTick(() => {
-        this.createGraficoVisitas();
-        this.createGraficoEntregas();
-        
-    })
+    this.prencherVendas();
   },
       
   
