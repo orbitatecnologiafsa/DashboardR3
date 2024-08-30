@@ -21,13 +21,14 @@ new Vue({
   },
   methods: {
     pesquisarProduto(val){
-        this.search = val;
-        console.log(this.search);
+        this.searchVendas = val;
+        console.log(this.searchVendas);
         console.log(val);
-        if (this.search.length === 0 ) {
+        if (this.searchVendas.length === 0 ) {
           this.prencherVendas();
         } else {
-          this.vendasData = this.vendasData.filter(item => item.nome.toLowerCase().includes(this.search.toLowerCase()));
+          this.vendasData = this.vendasData.filter(item => item.CODIGO.toLowerCase().includes(this.searchVendas.toLowerCase()));
+          console.log(this.vendasData);
         }
       },
 
@@ -41,6 +42,7 @@ new Vue({
                 
                 const vendas = await getVendasDb(dbId);
                 this.vendasData = vendas;
+                console.log(this.vendasData);
             } else {
                 console.error("Usuário não encontrado.");
             }
@@ -48,7 +50,12 @@ new Vue({
             console.error("Erro ao obter o usuário:", error);
         }
     },
-
+    vendasTotais() {
+        for (let index = 0; index < this.vendasData.length; index++) {
+            this.vendas += this.vendasData[index].TOTAL_NOTA      
+            
+        }
+    },
     
     async getDashboardData() {
         try {
@@ -143,9 +150,17 @@ new Vue({
     // this.createGraficoVisitas();
     // this.createGraficoEntregas();
   },
-  watch: {
-    search: 'pesquisarProduto'
-  }
+  computed: {
+    filteredVendasData() {
+      if (this.searchVendas.length === 0) {
+        return this.vendasData; // Retorna a lista completa se o termo de pesquisa estiver vazio
+      } else {
+        return this.vendasData.filter(item => 
+          item.CODIGO.toLowerCase().includes(this.searchVendas.toLowerCase())
+        );
+      }
+    }
+  },
       
   
 
