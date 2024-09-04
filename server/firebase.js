@@ -24,12 +24,13 @@ import { converterData }  from '../public/js/converterData.js'
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD1KxGa3u3kX1lGKbr6nN2_5gr8MTVl5zM",
-  authDomain: "prototiposincronizador.firebaseapp.com",
-  projectId: "prototiposincronizador",
-  storageBucket: "prototiposincronizador.appspot.com",
-  messagingSenderId: "761543687418",
-  appId: "1:761543687418:web:9ea382bb1b4494461d9d43"
+  apiKey: "AIzaSyDbSey9MkVvP_3fn88UjxS6VlG2tHMY_rI",
+  authDomain: "dashboardr3.firebaseapp.com",
+  projectId: "dashboardr3",
+  storageBucket: "dashboardr3.appspot.com",
+  messagingSenderId: "812133357031",
+  appId: "1:812133357031:web:0b2b7e90fdb5bd7fc9d942",
+  measurementId: "G-S2MJG8QCVG"
 };
 
 const app = initializeApp(firebaseConfig);
