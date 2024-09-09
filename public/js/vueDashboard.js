@@ -1,4 +1,4 @@
-import { getUserDbId, currentUser, getVendasDb, getCaixaDb, getProdutosDb } from '../../server/firebase.js';
+import { getUserDbId, currentUser, getVendasDb, getCaixaDb, getProdutosDb } from '../server/firebase.js';
 
 new Vue({
   el: '#appDashboard',

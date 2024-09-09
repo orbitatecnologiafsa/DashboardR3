@@ -1,4 +1,4 @@
-import { login, getUserDbId } from '../server/firebase.js';
+import { login, getUserDbId } from './firebase.js';
 
 
 const form = document.getElementById('loginForm');

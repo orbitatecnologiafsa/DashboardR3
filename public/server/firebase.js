@@ -19,7 +19,7 @@ import {
   setDoc,
   deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-import { converterData }  from '../public/js/converterData.js'
+import { converterData }  from '../js/converterData.js'
 
 
 
