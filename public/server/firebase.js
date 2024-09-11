@@ -37,6 +37,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+
+
 export function login(email, password) {
   return signInWithEmailAndPassword(auth, email, password);
 }
@@ -78,7 +80,7 @@ export async function getVendasDb(doc_id) {
     const vendasCollectionRef = collection(empresaDocRef, 'vendas');
 
     const querySnapshot = await getDocs(vendasCollectionRef);
-
+    
     const vendas = querySnapshot.docs.map(doc => {
       const data = doc.data();
       return {
@@ -89,8 +91,8 @@ export async function getVendasDb(doc_id) {
         NOME: data.NOME,
         NOTAFISCAL: data.NOTAFISCAL,
         DATA: converterData(data.DATA), // Converter timestamp para DD-MM-YYYY
-        TOTAL_NOTA: data.TOTAL_NOTA,
-        VALOR_PRODUTOS: data.VALOR_PRODUTOS
+        TOTAL_NOTA: data.TOTAL_NOTA, 
+        VALOR_PRODUTOS: data.VALOR_PRODUTOS, 
       };
     });
 
@@ -116,11 +118,11 @@ export async function getCaixaDb(doc_id) {
         id: doc.id,
         CODIGO: data.CODIGO,
         CODCAIXA: data.CODCAIXA,
-        ENTRADA: data.ENTRADA,
-        SAIDA: data.SAIDA,
+        ENTRADA: data.ENTRADA, 
+        SAIDA: data.SAIDA, 
         TIPO_MOVIMENTO: data.TIPO_MOVIMENTO,
         DATA: converterData(data.DATA), // Converter timestamp para DD-MM-YYYY
-        VALOR: data.VALOR,
+        VALOR: data.VALOR, 
         CODIGO_VENDA: data.CODIGO_VENDA
 
         

@@ -36,6 +36,10 @@ new Vue({
     dataFimCaixa: '',
     vendas7dias: [],
     vendas30dias: [],
+    formatação: new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    }),
 
   },
   methods: {
@@ -171,19 +175,30 @@ new Vue({
         });
     },
  // ==================================== Somas da aba de Vendas =============================================================================================//   
-    vendasPorDia(vendasData){
+ vendasPorDia(vendasData){
+        const formatter = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        });
         
-        const data = "03-05-2024";
-        console.log(vendasData[0].DATA);
-       
+        const data = new Date().toISOString().slice(0, 10);
+        const [year, month, day] = data.split('-');  // Separa em ["2024", "09", "11"]
+        const formattedDate = `${day}-${month}-${year}`;  // Reorganiza para "11-09-2024"
+        console.log(formattedDate);
+        console.log(this.vendasData[0].DATA);
+        
+         let vendasDia = 0
         for (let index = 0; index < vendasData.length; index++) {
-            if (data === this.vendasData[index].DATA) {
-                this.vendasHoje = this.vendasHoje + vendasData[index].TOTAL_NOTA
+            if (formattedDate === this.vendasData[index].DATA) {
+                vendasDia = vendasDia + vendasData[index].TOTAL_NOTA
             } else {
                 console.log("Não houveram vendas hoje");
             }
         }
-        console.log(this.vendasHoje);
+
+        
+        this.vendasHoje = formatter.format(vendasDia)
+        
     },
 
     // vendasPorSemana(vendasData) {
@@ -287,7 +302,7 @@ new Vue({
     
     vendasPorDiaNosUltimos30Dias(vendasData) {
         // Data final é a data atual
-        const fim = new Date("08-01-2024"); // Data atual
+        const fim = new Date(); // Data atual
 
         // Array para armazenar as vendas de cada dia nos primeiros 30 dias
         this.vendas30dias = Array(30).fill(0);
@@ -348,6 +363,10 @@ new Vue({
 
 // ==================================== Somas da aba de Produtos =============================================================================================//
     valorTotalEstoque(produtosEstoqueData) {
+        const formatter = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        });
         for (let index = 0; index < produtosEstoqueData.length; index++) {
             if (produtosEstoqueData[index].ESTOQUE_ATUAL >= 1) {
                 // console.log("Estoque cheio", produtosEstoqueData[index].PRECOCUSTO);
@@ -356,20 +375,35 @@ new Vue({
                 
             } else {
                 console.log("Estoque vazio");
-            }
-            
+            }      
         }
+        this.estoqueValorTotal = formatter.format(this.estoqueValorTotal)
+        this.estoqueValorTotalVenda = formatter.format(this.estoqueValorTotalVenda)
     },
 // ==================================== Somas da aba de Caixa =============================================================================================//
     valoresCaixa(DataCaixa) {
+
+        const formatter = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        });
+        let entradaCaixa = 0
+        let saidaCaixa = 0
+        
+        let vendaDinheiro = 0
         for (let index = 0; index < DataCaixa.length; index++) {
-            this.caixaEntrada = this.caixaEntrada + DataCaixa[index].ENTRADA
-            this.caixaSaida = this.caixaSaida + DataCaixa[index].SAIDA
-            this.totalCaixa = this.caixaEntrada - this.caixaSaida
+            console.log(entradaCaixa, saidaCaixa, vendaDinheiro);
+            entradaCaixa = entradaCaixa + DataCaixa[index].ENTRADA
+            saidaCaixa = saidaCaixa + DataCaixa[index].SAIDA
+            this.totalCaixa = entradaCaixa - saidaCaixa
             if (DataCaixa[index].TIPO_MOVIMENTO === "VENDA DINHEIRO") {
-                this.vendaDinheiro = this.vendaDinheiro + DataCaixa[index].VALOR
+                vendaDinheiro = vendaDinheiro + DataCaixa[index].VALOR
             }
         }
+        this.caixaEntrada = formatter.format(entradaCaixa)
+        this.caixaSaida = formatter.format(saidaCaixa)
+        this.totalCaixa = formatter.format(this.totalCaixa)
+        this.vendaDinheiro = formatter.format(vendaDinheiro)
     }
     
 

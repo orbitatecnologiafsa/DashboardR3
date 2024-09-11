@@ -122,7 +122,7 @@
                     <div class="primary-info">
                         <div class="info-header">
                             <p>Vendas Hoje</p>
-                            <h2>R$ {{ vendasHoje.toFixed(2) }}</h2>
+                            <h2>{{ vendasHoje }}</h2>
                             <!-- <h2>R$ {{ vendasTotais.toFixed(2) }}</h2> -->
                         </div>
                         <div class="background-icon">
@@ -132,7 +132,7 @@
                     <div class="primary-info">
                         <div class="info-header">
                             <p>Vendas do mês</p>
-                            <h2>R$ {{ vendasMes.toFixed(2) }}</h2>
+                            <h2>{{ formatação.format(vendasMes) }}</h2>
                         </div>
                         <div class="background-icon">
                             <i class="fas fa-boxes"></i>
@@ -141,7 +141,7 @@
                     <div class="primary-info">
                         <div class="info-header">
                             <p>Caixa</p>
-                            <h2>R$ {{ totalCaixa.toFixed(2) }}</h2>
+                            <h2>{{ totalCaixa }}</h2>
                         </div>
                         <div class="background-icon">
                             <i class="fas fa-boxes"></i>
@@ -150,7 +150,7 @@
                     <div class="primary-info">
                         <div class="info-header">
                             <p>Estoque</p>
-                            <h2>R$ {{ estoqueValorTotal.toFixed(2) }}</h2>
+                            <h2>{{ estoqueValorTotal }}</h2>
                         </div>
                         <div class="background-icon">
                             <i class="fas fa-exclamation-circle"></i>
@@ -188,8 +188,8 @@
                                       <td>{{ vendas.NOME }}</td>
                                       <td>{{ vendas.NOTAFISCAL }}</td>
                                       <td>{{ vendas.DATA }}</td>
-                                      <td>{{ typeof vendas.TOTAL_NOTA === 'number' && !isNaN(vendas.TOTAL_NOTA) ? vendas.TOTAL_NOTA.toFixed(2) : '0.00' }}</td>
-                                      <td>{{ typeof vendas.VALOR_PRODUTOS === 'number' && !isNaN(vendas.VALOR_PRODUTOS) ? vendas.VALOR_PRODUTOS.toFixed(2) : '0.00' }}</td>
+                                      <td>{{ formatação.format(vendas.TOTAL_NOTA) }}</td>
+                                      <td>{{ formatação.format(vendas.VALOR_PRODUTOS) }}</td>
                                       
                                     </tr>
     
@@ -214,7 +214,7 @@
                         <div class="primary-info">
                             <div class="info-header">
                                 <p>Total por preço de Custo</p>
-                                <h2>R$ {{ estoqueValorTotal.toFixed(2) }}</h2>
+                                <h2>{{ estoqueValorTotal }}</h2>
                             </div>
                             <div class="background-icon">
                                 <i class="fas fa-boxes"></i>
@@ -223,7 +223,7 @@
                         <div class="primary-info">
                             <div class="info-header">
                                 <p>Total por preço de Venda</p>
-                                <h2>R$ {{ estoqueValorTotalVenda.toFixed(2) }}</h2>
+                                <h2>{{ estoqueValorTotalVenda }}</h2>
                             </div>
                             <div class="background-icon">
                                 <i class="fas fa-boxes"></i>
@@ -270,8 +270,8 @@
                                         <tr>
                                           <th scope="row">{{ produtos.CODIGO }}</th>
                                           <td>{{ produtos.PRODUTO }}</td>
-                                          <td>{{ typeof produtos.PRECOCUSTO === 'number' && !isNaN(produtos.PRECOCUSTO) ? produtos.PRECOCUSTO.toFixed(2) : '0.00' }}</td>
-                                          <td>{{ typeof produtos.PRECOVENDA === 'number' && !isNaN(produtos.PRECOVENDA) ? produtos.PRECOVENDA.toFixed(2) : '0.00' }}</td>
+                                          <td>{{ formatação.format(produtos.PRECOCUSTO)  }}</td>
+                                          <td>{{ formatação.format(produtos.PRECOVENDA)  }}</td>
                                           <td>{{ produtos.ESTOQUE_ATUAL }}</td>
                                           <td>{{ produtos.UNIDADE }}</td>
                                           <td>{{ produtos.NOTAFISCAL }}</td>
@@ -295,7 +295,7 @@
                         <div class="primary-info">
                             <div class="info-header">
                                 <p>Valor em Caixa</p>
-                                <h2>R$ {{ vendaDinheiro }}</h2>
+                                <h2>{{ vendaDinheiro }}</h2>
                             </div>
                             <div class="background-icon">
                                 <i class="fas fa-users"></i>
@@ -304,7 +304,7 @@
                         <div class="primary-info">
                             <div class="info-header">
                                 <p>Entrada</p>
-                                <h2>R$ {{ caixaEntrada }}</h2>
+                                <h2>{{ caixaEntrada }}</h2>
                             </div>
                             <div class="background-icon">
                                 <i class="fas fa-boxes"></i>
@@ -313,7 +313,7 @@
                         <div class="primary-info">
                             <div class="info-header">
                                 <p>Saida</p>
-                                <h2>R$ {{ caixaSaida }}</h2>
+                                <h2>{{ caixaSaida }}</h2>
                             </div>
                             <div class="background-icon">
                                 <i class="fas fa-boxes"></i>
@@ -322,7 +322,7 @@
                         <div class="primary-info">
                             <div class="info-header">
                                 <p>Total Caixa</p>
-                                <h2>R$ {{ totalCaixa }}</h2>
+                                <h2>{{ totalCaixa }}</h2>
                             </div>
                             <div class="background-icon">
                                 <i class="fas fa-exclamation-circle"></i>
