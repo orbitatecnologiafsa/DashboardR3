@@ -390,20 +390,22 @@ new Vue({
         let entradaCaixa = 0
         let saidaCaixa = 0
         
-        let vendaDinheiro = 0
+        
         for (let index = 0; index < DataCaixa.length; index++) {
-            console.log(entradaCaixa, saidaCaixa, vendaDinheiro);
             entradaCaixa = entradaCaixa + DataCaixa[index].ENTRADA
             saidaCaixa = saidaCaixa + DataCaixa[index].SAIDA
             this.totalCaixa = entradaCaixa - saidaCaixa
             if (DataCaixa[index].TIPO_MOVIMENTO === "VENDA DINHEIRO") {
-                vendaDinheiro = vendaDinheiro + DataCaixa[index].VALOR
+                const valorConvertido = parseFloat(DataCaixa[index].VALOR) 
+                
+                this.vendaDinheiro = this.vendaDinheiro + valorConvertido
             }
         }
         this.caixaEntrada = formatter.format(entradaCaixa)
         this.caixaSaida = formatter.format(saidaCaixa)
         this.totalCaixa = formatter.format(this.totalCaixa)
-        this.vendaDinheiro = formatter.format(vendaDinheiro)
+        this.vendaDinheiro = formatter.format(this.vendaDinheiro)
+        console.log("Entrada Caixa: ", entradaCaixa, "Saida Caixa: ", saidaCaixa, "Total Caixa: ", this.totalCaixa, "Venda Dinheiro: ", this.vendaDinheiro);
     }
     
 
