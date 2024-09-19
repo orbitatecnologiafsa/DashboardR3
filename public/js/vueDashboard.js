@@ -273,7 +273,7 @@ new Vue({
 
     vendasPorDiaNosUltimos7Dias(vendasData) {
         // Data final é a data atual
-        const fim = new Date("08-01-2024"); // Data atual
+        const fim = new Date(); // Data atual
         console.log(fim);
         
         // Array para armazenar as vendas de cada dia nos últimos 7 dias
@@ -291,7 +291,8 @@ new Vue({
             
             // Se a venda estiver nos últimos 7 dias, adiciona ao respectivo dia
             if (diffInDays >= 0 && diffInDays < 7) {
-                this.vendas7dias[diffInDays] += venda.TOTAL_NOTA;
+                const index = 6 - diffInDays;
+                this.vendas7dias[index] += venda.TOTAL_NOTA;
             }
         });
     
@@ -303,34 +304,36 @@ new Vue({
     vendasPorDiaNosUltimos30Dias(vendasData) {
         // Data final é a data atual
         const fim = new Date(); // Data atual
-
-        // Array para armazenar as vendas de cada dia nos primeiros 30 dias
+    
+        // Array para armazenar as vendas de cada dia nos últimos 30 dias
         this.vendas30dias = Array(30).fill(0);
     
-        // Itera sobre as vendas e distribui os valores para os primeiros 30 dias
+        // Itera sobre as vendas e distribui os valores para os últimos 30 dias
         vendasData.forEach(venda => {
             // Supondo que venda.DATA está no formato "DD-MM-YYYY"
             const [day, month, year] = venda.DATA.split('-');
             const dataVenda = new Date(`${year}-${month}-${day}`);
-            
+    
             // Calcula a diferença em dias entre a data da venda e a data atual
             const diffInTime = fim.getTime() - dataVenda.getTime();
             const diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24));
-            
-            // Se a venda estiver nos primeiros 30 dias, adiciona ao respectivo dia
+    
+            // Se a venda estiver dentro dos últimos 30 dias, coloca no respectivo dia
             if (diffInDays >= 0 && diffInDays < 30) {
-                this.vendas30dias[diffInDays] += venda.TOTAL_NOTA;
+                const index = 29 - diffInDays; // Inverte o índice para colocar a venda no dia correto
+                this.vendas30dias[index] += venda.TOTAL_NOTA;
+                console.log(this.vendas30dias)
             }
         });
     
-        // Retorna as vendas de cada um dos primeiros 30 dias
+        // Retorna as vendas de cada um dos últimos 30 dias
         console.log(this.vendas30dias);
         return this.vendas30dias;
     },
     
     vendasPorMes(vendasData) {
         // Data final é a data atual
-        const fim = new Date('08-01-2024'); // Data atual
+        const fim = new Date(); // Data atual
         
     
         // Data de início é exatamente um mês antes da data final
@@ -368,14 +371,14 @@ new Vue({
             currency: 'BRL'
         });
         for (let index = 0; index < produtosEstoqueData.length; index++) {
-            if (produtosEstoqueData[index].ESTOQUE_ATUAL >= 1) {
-                // console.log("Estoque cheio", produtosEstoqueData[index].PRECOCUSTO);
+        //     if (produtosEstoqueData[index].ESTOQUE_ATUAL >= 1) {
+        //         console.log("Estoque cheio", produtosEstoqueData[index].PRECOCUSTO);
                 this.estoqueValorTotal = this.estoqueValorTotal + produtosEstoqueData[index].PRECOCUSTO
                 this.estoqueValorTotalVenda = this.estoqueValorTotal + produtosEstoqueData[index].PRECOVENDA
                 
-            } else {
-                console.log("Estoque vazio");
-            }      
+        //     } else {
+        //         console.log("Estoque vazio");
+        //     }      
         }
         this.estoqueValorTotal = formatter.format(this.estoqueValorTotal)
         this.estoqueValorTotalVenda = formatter.format(this.estoqueValorTotalVenda)
@@ -395,11 +398,11 @@ new Vue({
             entradaCaixa = entradaCaixa + DataCaixa[index].ENTRADA
             saidaCaixa = saidaCaixa + DataCaixa[index].SAIDA
             this.totalCaixa = entradaCaixa - saidaCaixa
-            if (DataCaixa[index].TIPO_MOVIMENTO === "VENDA DINHEIRO") {
+            // if (DataCaixa[index].TIPO_MOVIMENTO === "VENDA DINHEIRO") {
                 const valorConvertido = parseFloat(DataCaixa[index].VALOR) 
                 
                 this.vendaDinheiro = this.vendaDinheiro + valorConvertido
-            }
+            // }
         }
         this.caixaEntrada = formatter.format(entradaCaixa)
         this.caixaSaida = formatter.format(saidaCaixa)
@@ -419,69 +422,69 @@ new Vue({
     
     
   },
-  computed: {
-    filteredVendasData() {
-        const searchTerm = this.searchVendas.toLowerCase();
-        let filteredData = this.vendasData;
+//   computed: {
+//     filteredVendasData() {
+//         const searchTerm = this.searchVendas.toLowerCase();
+//         let filteredData = this.vendasData;
     
-        // Filtrar pelo termo de pesquisa (opcional)
-        if (searchTerm) {
-          filteredData = filteredData.filter(item => 
-            item.CODIGO.toLowerCase().includes(searchTerm) || 
-            item.NOME.toLowerCase().includes(searchTerm)
-          );
-        }
+//         // Filtrar pelo termo de pesquisa (opcional)
+//         if (searchTerm) {
+//           filteredData = filteredData.filter(item => 
+//             item.CODIGO.toLowerCase().includes(searchTerm) || 
+//             item.NOME.toLowerCase().includes(searchTerm)
+//           );
+//         }
         
     
-        // Filtrar pelo intervalo de datas
-        if (this.dataInicio && this.dataFim) {
-          const inicio = new Date(this.dataInicio);
-          const fim = new Date(this.dataFim);
-          console.log(inicio, fim);
-          filteredData = filteredData.filter(item => {
-            const [day, month, year] = item.DATA.split('-');
-            const dataVenda = new Date(`${year}-${month}-${day}`)
-            return dataVenda >= inicio && dataVenda <= fim;
-          });
-        }
+//         // Filtrar pelo intervalo de datas
+//         if (this.dataInicio && this.dataFim) {
+//           const inicio = new Date(this.dataInicio);
+//           const fim = new Date(this.dataFim);
+//           console.log(inicio, fim);
+//           filteredData = filteredData.filter(item => {
+//             const [day, month, year] = item.DATA.split('-');
+//             const dataVenda = new Date(`${year}-${month}-${day}`)
+//             return dataVenda >= inicio && dataVenda <= fim;
+//           });
+//         }
     
-        return filteredData;
-    },
-    filteredProdutos() {
-        if (!this.searchProdutos) {
-          return this.produtosEstoqueData; // Return full data if search is empty
-        }
-        const searchTerm = this.searchProdutos.toLowerCase();
-        return this.produtosEstoqueData.filter(item => 
-          item.PRODUTO.toLowerCase().includes(searchTerm) ||
-          item.CODIGO.toLowerCase().includes(searchTerm)
-        );
-      },
-    filteredCaixaData() {
-        const searchTerm = this.searchCaixa.toLowerCase();
-        let filteredData = this.DataCaixa;
+//         return filteredData;
+//     },
+//     filteredProdutos() {
+//         if (!this.searchProdutos) {
+//           return this.produtosEstoqueData; // Return full data if search is empty
+//         }
+//         const searchTerm = this.searchProdutos.toLowerCase();
+//         return this.produtosEstoqueData.filter(item => 
+//           item.PRODUTO.toLowerCase().includes(searchTerm) ||
+//           item.CODIGO.toLowerCase().includes(searchTerm)
+//         );
+//       },
+//     filteredCaixaData() {
+//         const searchTerm = this.searchCaixa.toLowerCase();
+//         let filteredData = this.DataCaixa;
     
-        // // Filtrar pelo termo de pesquisa (opcional)
-        if (searchTerm) {
-          filteredData = filteredData.filter(item => 
-            item.TIPO_MOVIMENTO.toLowerCase().includes(searchTerm)
-          );
-        }
+//         // // Filtrar pelo termo de pesquisa (opcional)
+//         if (searchTerm) {
+//           filteredData = filteredData.filter(item => 
+//             item.TIPO_MOVIMENTO.toLowerCase().includes(searchTerm)
+//           );
+//         }
     
-        // Filtrar pelo intervalo de datas
-        if (this.dataInicioCaixa && this.dataFimCaixa) {
-          const inicio = new Date(this.dataInicioCaixa);
-          const fim = new Date(this.dataFimCaixa);
-          console.log(inicio, fim);
-          filteredData = filteredData.filter(item => {
-            const [day, month, year] = item.DATA.split('-');
-            const dataVenda = new Date(`${year}-${month}-${day}`)
-            return dataVenda >= inicio && dataVenda <= fim;
-          });
-        }
-        return filteredData;
-    }
-}
+//         // Filtrar pelo intervalo de datas
+//         if (this.dataInicioCaixa && this.dataFimCaixa) {
+//           const inicio = new Date(this.dataInicioCaixa);
+//           const fim = new Date(this.dataFimCaixa);
+//           console.log(inicio, fim);
+//           filteredData = filteredData.filter(item => {
+//             const [day, month, year] = item.DATA.split('-');
+//             const dataVenda = new Date(`${year}-${month}-${day}`)
+//             return dataVenda >= inicio && dataVenda <= fim;
+//           });
+//         }
+//         return filteredData;
+//     }
+// }
   
       
   

@@ -84,12 +84,12 @@ export async function getVendasDb(doc_id) {
     const vendas = querySnapshot.docs.map(doc => {
       const data = doc.data();
       return {
-        id: doc.id,
-        CODIGO: data.CODIGO,
-        CFOP: data.CFOP,
-        CODCLIENTE: data.CODCLIENTE,
-        NOME: data.NOME,
-        NOTAFISCAL: data.NOTAFISCAL,
+        // id: doc.id,
+        // CODIGO: data.CODIGO,
+        // CFOP: data.CFOP,
+        // CODCLIENTE: data.CODCLIENTE,
+        // NOME: data.NOME,
+        // NOTAFISCAL: data.NOTAFISCAL,
         DATA: converterData(data.DATA), // Converter timestamp para DD-MM-YYYY
         TOTAL_NOTA: data.TOTAL_NOTA, 
         VALOR_PRODUTOS: data.VALOR_PRODUTOS, 
@@ -115,15 +115,15 @@ export async function getCaixaDb(doc_id) {
     const vendas = querySnapshot.docs.map(doc => {
       const data = doc.data();
       return {
-        id: doc.id,
-        CODIGO: data.CODIGO,
-        CODCAIXA: data.CODCAIXA,
+        // id: doc.id,
+        // CODIGO: data.CODIGO,
+        // CODCAIXA: data.CODCAIXA,
         ENTRADA: data.ENTRADA, 
         SAIDA: data.SAIDA, 
-        TIPO_MOVIMENTO: data.TIPO_MOVIMENTO,
+        // TIPO_MOVIMENTO: data.TIPO_MOVIMENTO,
         DATA: converterData(data.DATA), // Converter timestamp para DD-MM-YYYY
         VALOR: data.VALOR, 
-        CODIGO_VENDA: data.CODIGO_VENDA
+        // CODIGO_VENDA: data.CODIGO_VENDA
 
         
       };
@@ -148,15 +148,16 @@ export async function getProdutosDb(doc_id) {
     const vendas = querySnapshot.docs.map(doc => {
       const data = doc.data();
       return {
-        id: doc.id,
-        CODIGO: data.CODIGO,
-        ESTOQUE_ATUAL: data.ESTOQUE_ATUAL,
-        NOTAFISCAL: data.NOTAFISCAL,
-        PRECOCUSTO: data.PRECOCUSTO,
-        PRECOVENDA: data.PRECOVENDA,
-        PRODUTO: data.PRODUTO, // Converter timestamp para DD-MM-YYYY
-        UNIDADE: data.UNIDADE,
-        CODBARRA: data.CODBARRA
+        // id: doc.id,
+        // CODIGO: data.CODIGO,
+        // ESTOQUE_ATUAL: data.ESTOQUE_ATUAL,
+        // NOTAFISCAL: data.NOTAFISCAL,
+        PRECOCUSTO: data.total_preco_custo
+        ,
+        PRECOVENDA: data.total_preco_venda,
+        // PRODUTO: data.PRODUTO, 
+        // UNIDADE: data.UNIDADE,
+        // CODBARRA: data.CODBARRA
 
         
       };
