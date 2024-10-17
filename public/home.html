@@ -182,7 +182,7 @@
                             <table class="table" >
                                 <thead>
                                   <tr>
-                                    <th scope="col">Codigo</th>
+                                    <!-- <th scope="col">Codigo</th> -->
                                     <th scope="col">CFOP</th>
                                     <th scope="col">Cod. Cliente</th>
                                     <th scope="col">Nome</th>
@@ -194,8 +194,8 @@
                                 </thead>
                                 <tbody v-for="(vendas, index) in filteredVendasData" :key="vendas.CODIGO">
                                     <tr class="table-light">
-                                      <th scope="row">{{ vendas.CODIGO }}</th>
-                                      <td>{{ vendas.CFOP }}</td>
+                                      <!-- <th scope="row">{{ vendas.CODIGO }}</th> -->
+                                      <th scope="row">{{ vendas.CFOP }}</th>
                                       <td>{{ vendas.CODCLIENTE }}</td>
                                       <td>{{ vendas.NOME }}</td>
                                       <td>{{ vendas.NOTAFISCAL }}</td>
