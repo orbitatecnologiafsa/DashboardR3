@@ -1,4 +1,4 @@
-import { getUserDbId, currentUser, getVendasDb, getCaixaDb, getProdutosDb } from '../server/firebase.js';
+
 
 new Vue({
   el: '#appDashboard',
@@ -40,26 +40,34 @@ new Vue({
         style: 'currency',
         currency: 'BRL'
     }),
+    comissoesAll: [],
+    comissoesData: [],
+    comissoesDataNome: [],
+    mesAtual: '',
 
   },
   methods: {
     setActiveTab(tab) {
         this.activeTab = tab;
       },
-
-
+    async getDashboardTest(){
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'}
+        }
+        const response = await fetch('/dashboardVendas', config)
+        const data = await response.json()
+        this.vendasData = data
+        this.prencherVendas()
+        const currentDate = new Date();
+        const currentMonthName = currentDate.toLocaleString('default', { month: 'long' });
+        // Exemplo: "outubro"
+        this.mesAtual = currentMonthName
+    },
 
     async prencherVendas(){
 
-        try {
-            const user = await currentUser();
-            if (user) {
-                const userEmail = user.email;
-                const dbId = await getUserDbId(userEmail);
-                
-                const vendas = await getVendasDb(dbId);
-                this.vendasData = vendas;
-                
+        try {                
                 for (let index = 0; index < this.vendasData.length; index++) {
                     this.vendasTotais = this.vendasTotais + this.vendasData[index].TOTAL_NOTA
                 }
@@ -72,60 +80,59 @@ new Vue({
                     this.vendasPorDiaNosUltimos30Dias(this.vendasData);
                     this.createGraficoEntregas();
                     this.createGraficoVisitas();
+                    this.createGraficoComissoes();
                     
                     
                 } catch (error) {
                     console.error("Erro ao obter os dados de vendas:", error);
                 }
-            } else {
-                console.error("Usuário não encontrado.");
+            } catch (error) {
+                console.error("Erro ao obter os dados de vendas:", error);
             }
-        } catch (error) {
-            console.error("Erro ao obter o usuário:", error);
-        }
+        
     },
     
-    async getDashboardData() {
-        try {
-            const user = await currentUser();
-            if (user) {
-                const userEmail = user.email;
-                const dbId = await getUserDbId(userEmail);
-
-                const caixa = await getCaixaDb(dbId);
-                this.DataCaixa = caixa;
-                console.log(this.DataCaixa);
-                this.valoresCaixa(this.DataCaixa);
-            }
-        } catch (error) {
-            
+    async getDashboardCaixa(){
+        const config = {
+            headers: {'Content-Type': 'application/json'},
+            method: 'GET',
         }
+        const response = await fetch('/dashboardCaixa', config)
+        const data = await response.json()
+        this.DataCaixa = data
+        this.valoresCaixa(this.DataCaixa)
+    },
+    async getDashboardComissoes(){
+        const config = {
+            headers: {'Content-Type': 'application/json'},
+            method: 'GET',
+        }
+        const response = await fetch('/dashboardComissoes', config)
+        const data = await response.json()
+        this.comissoesAll = data
+        this.comissoesData = data.map(item => item.VALOR_TOTAL)
+        this.comissoesDataNome = data.map(item => item.NOME)
         
     },
 
-    async getProdutosEstoque() {
-        try {
-            const user = await currentUser();
-            if (user) {
-                const userEmail = user.email;
-                const dbId = await getUserDbId(userEmail);
+//     async getProdutosEstoque() {
+//         try {
+//             const user = await currentUser();
+//             if (user) {
+//                 const userEmail = user.email;
+//                 const dbId = await getUserDbId(userEmail);
                 
-                const estoque = await getProdutosDb(dbId);
-                this.produtosEstoqueData = estoque;
-                // console.log(this.produtosEstoqueData);
-                this.valorTotalEstoque(this.produtosEstoqueData);
-            } else {
-                console.error("Usuário não encontrado.");
-            }
-        } catch (error) {
-            console.error("Erro ao obter o usuário:", error);
-        }
-    },
+//                 const estoque = await getProdutosDb(dbId);
+//                 this.produtosEstoqueData = estoque;
 
-    
-   
-
-
+//                 this.valorTotalEstoque(this.produtosEstoqueData);
+//             } else {
+//                 console.error("Usuário não encontrado.");
+//             }
+//         } catch (error) {
+//             console.error("Erro ao obter o usuário:", error);
+//         }
+//     },
     createGraficoVisitas() {
         const ctx1 = document.getElementById('graficoVisitas').getContext('2d');
         new Chart(ctx1, {
@@ -174,8 +181,32 @@ new Vue({
             }
         });
     },
- // ==================================== Somas da aba de Vendas =============================================================================================//   
- vendasPorDia(vendasData){
+
+    createGraficoComissoes() {
+        const ctx3 = document.getElementById('graficoComissoes').getContext('2d');
+        new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: this.comissoesDataNome,
+                datasets: [{
+                    label: 'Valores das Vendas',
+                    data: this.comissoesData,
+                    backgroundColor: '#00adf6',
+                    borderColor: '#00adf6',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    },
+//  // ==================================== Somas da aba de Vendas =============================================================================================//   
+    vendasPorDia(vendasData){
         const formatter = new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL'
@@ -184,15 +215,13 @@ new Vue({
         const data = new Date().toISOString().slice(0, 10);
         const [year, month, day] = data.split('-');  // Separa em ["2024", "09", "11"]
         const formattedDate = `${day}-${month}-${year}`;  // Reorganiza para "11-09-2024"
-        console.log(formattedDate);
-        console.log(this.vendasData[0].DATA);
         
          let vendasDia = 0
         for (let index = 0; index < vendasData.length; index++) {
             if (formattedDate === this.vendasData[index].DATA) {
                 vendasDia = vendasDia + vendasData[index].TOTAL_NOTA
             } else {
-                console.log("Não houveram vendas hoje");
+                // console.log("Não houveram vendas hoje");
             }
         }
 
@@ -201,80 +230,80 @@ new Vue({
         
     },
 
-    // vendasPorSemana(vendasData) {
-    //     // Converta as datas de venda para o formato Date
-    //     const vendasConvertidas = vendasData.map(venda => {
-    //         const [day, month, year] = venda.DATA.split('-');
-    //         return {
-    //             ...venda,
-    //             dataVenda: new Date(`${year}-${month}-${day}`)
-    //         };
-    //     });
+//     // vendasPorSemana(vendasData) {
+//     //     // Converta as datas de venda para o formato Date
+//     //     const vendasConvertidas = vendasData.map(venda => {
+//     //         const [day, month, year] = venda.DATA.split('-');
+//     //         return {
+//     //             ...venda,
+//     //             dataVenda: new Date(`${year}-${month}-${day}`)
+//     //         };
+//     //     });
     
-    //     // Ordene as vendas por data (caso ainda não estejam ordenadas)
-    //     vendasConvertidas.sort((a, b) => a.dataVenda - b.dataVenda);
+//     //     // Ordene as vendas por data (caso ainda não estejam ordenadas)
+//     //     vendasConvertidas.sort((a, b) => a.dataVenda - b.dataVenda);
     
-    //     // Inicialize o array para armazenar os totais por semana
-    //     const vendasPorSemana = [];
-    //     let semanaAtual = [];
-    //     let inicioSemana = vendasConvertidas[0].dataVenda;
+//     //     // Inicialize o array para armazenar os totais por semana
+//     //     const vendasPorSemana = [];
+//     //     let semanaAtual = [];
+//     //     let inicioSemana = vendasConvertidas[0].dataVenda;
     
-    //     vendasConvertidas.forEach(venda => {
-    //         // Verifique se a venda pertence à semana atual
-    //         if ((venda.dataVenda - inicioSemana) / (1000 * 60 * 60 * 24) < 7) {
-    //             semanaAtual.push(venda);
-    //         } else {
-    //             // Calcule o total da semana e adicione ao array
-    //             const totalSemana = semanaAtual.reduce((total, venda) => total + venda.TOTAL_NOTA, 0);
-    //             vendasPorSemana.push({ inicioSemana, totalSemana });
+//     //     vendasConvertidas.forEach(venda => {
+//     //         // Verifique se a venda pertence à semana atual
+//     //         if ((venda.dataVenda - inicioSemana) / (1000 * 60 * 60 * 24) < 7) {
+//     //             semanaAtual.push(venda);
+//     //         } else {
+//     //             // Calcule o total da semana e adicione ao array
+//     //             const totalSemana = semanaAtual.reduce((total, venda) => total + venda.TOTAL_NOTA, 0);
+//     //             vendasPorSemana.push({ inicioSemana, totalSemana });
     
-    //             // Inicie uma nova semana
-    //             semanaAtual = [venda];
-    //             inicioSemana = venda.dataVenda;
-    //         }
-    //     });
+//     //             // Inicie uma nova semana
+//     //             semanaAtual = [venda];
+//     //             inicioSemana = venda.dataVenda;
+//     //         }
+//     //     });
     
-    //     // Adicione a última semana ao array
-    //     if (semanaAtual.length > 0) {
-    //         const totalSemana = semanaAtual.reduce((total, venda) => total + venda.TOTAL_NOTA, 0);
-    //         vendasPorSemana.push({ inicioSemana, totalSemana });
-    //     }
-    //     console.log(vendasPorSemana);
-    //     return vendasPorSemana;
-    // },
+//     //     // Adicione a última semana ao array
+//     //     if (semanaAtual.length > 0) {
+//     //         const totalSemana = semanaAtual.reduce((total, venda) => total + venda.TOTAL_NOTA, 0);
+//     //         vendasPorSemana.push({ inicioSemana, totalSemana });
+//     //     }
 
-    // vendasUltimos7Dias(vendasData) {
-    //     // Data final é a data atual
-    //     const fim = new Date(); // Data atual
+//     //     return vendasPorSemana;
+//     // },
+
+//     // vendasUltimos7Dias(vendasData) {
+//     //     // Data final é a data atual
+//     //     const fim = new Date(); // Data atual
     
-    //     // Data de início é exatamente 7 dias antes da data final
-    //     const inicio = new Date(fim);
-    //     inicio.setDate(fim.getDate() - 7); // Subtrai 7 dias
+//     //     // Data de início é exatamente 7 dias antes da data final
+//     //     const inicio = new Date(fim);
+//     //     inicio.setDate(fim.getDate() - 7); // Subtrai 7 dias
     
-    //     // Inicialize a soma
-    //     let total = 0;
+//     //     // Inicialize a soma
+//     //     let total = 0;
     
-    //     // Filtre as vendas pelo intervalo de datas e some os valores
-    //     vendasData.forEach(venda => {
-    //         // Supondo que venda.DATA está no formato "DD-MM-YYYY"
-    //         const [day, month, year] = venda.DATA.split('-');
-    //         const dataVenda = new Date(`${year}-${month}-${day}`);
+//     //     // Filtre as vendas pelo intervalo de datas e some os valores
+//     //     vendasData.forEach(venda => {
+//     //         // Supondo que venda.DATA está no formato "DD-MM-YYYY"
+//     //         const [day, month, year] = venda.DATA.split('-');
+//     //         const dataVenda = new Date(`${year}-${month}-${day}`);
     
-    //         // Verifica se a data da venda está dentro do intervalo dos últimos 7 dias
-    //         if (dataVenda >= inicio && dataVenda <= fim) {
-    //             total += venda.TOTAL_NOTA;
-    //         }
-    //     });
+//     //         // Verifica se a data da venda está dentro do intervalo dos últimos 7 dias
+//     //         if (dataVenda >= inicio && dataVenda <= fim) {
+//     //             total += venda.TOTAL_NOTA;
+//     //         }
+//     //     });
     
-    //     this.vendasUltimos7Dias = total;
-    //     console.log(this.vendasUltimos7Dias);
-    //     return total;
-    // },
+//     //     this.vendasUltimos7Dias = total;
+
+//     //     return total;
+//     // },
 
     vendasPorDiaNosUltimos7Dias(vendasData) {
         // Data final é a data atual
         const fim = new Date(); // Data atual
-        console.log(fim);
+        
         
         // Array para armazenar as vendas de cada dia nos últimos 7 dias
         this.vendas7dias = Array(7).fill(0);
@@ -297,7 +326,6 @@ new Vue({
         });
     
         // Retorna as vendas de cada um dos últimos 7 dias
-        console.log(this.vendas7dias);
         return this.vendas7dias;
     },
     
@@ -322,12 +350,12 @@ new Vue({
             if (diffInDays >= 0 && diffInDays < 30) {
                 const index = 29 - diffInDays; // Inverte o índice para colocar a venda no dia correto
                 this.vendas30dias[index] += venda.TOTAL_NOTA;
-                console.log(this.vendas30dias)
+                
             }
         });
     
         // Retorna as vendas de cada um dos últimos 30 dias
-        console.log(this.vendas30dias);
+        
         return this.vendas30dias;
     },
     
@@ -350,7 +378,7 @@ new Vue({
             const [day, month, year] = venda.DATA.split('-');
             const dataVenda = new Date(`${year}-${month}-${day}`);
     
-            // console.log("Data da venda:", dataVenda);
+            
     
             if (dataVenda >= inicio && dataVenda <= fim) {
                 total += venda.TOTAL_NOTA;
@@ -362,9 +390,9 @@ new Vue({
         this.vendasMes = total;
         return total;
     },
-// ==================================== Somas da aba de Vendas =============================================================================================//
+// // ==================================== Somas da aba de Vendas =============================================================================================//
 
-// ==================================== Somas da aba de Produtos =============================================================================================//
+// // ==================================== Somas da aba de Produtos =============================================================================================//
     valorTotalEstoque(produtosEstoqueData) {
         const formatter = new Intl.NumberFormat('pt-BR', {
             style: 'currency',
@@ -383,7 +411,7 @@ new Vue({
         this.estoqueValorTotal = formatter.format(this.estoqueValorTotal)
         this.estoqueValorTotalVenda = formatter.format(this.estoqueValorTotalVenda)
     },
-// ==================================== Somas da aba de Caixa =============================================================================================//
+// // ==================================== Somas da aba de Caixa =============================================================================================//
     valoresCaixa(DataCaixa) {
 
         const formatter = new Intl.NumberFormat('pt-BR', {
@@ -416,75 +444,88 @@ new Vue({
 
   },
   mounted() {
-    this.prencherVendas();
-    this.getDashboardData();
-    this.getProdutosEstoque();
+    this.getDashboardTest();
+    this.getDashboardCaixa();
+    this.getDashboardComissoes();
+    // this.prencherVendas();
+    // this.getDashboardData();
+    // this.getProdutosEstoque();
     
     
   },
-//   computed: {
-//     filteredVendasData() {
-//         const searchTerm = this.searchVendas.toLowerCase();
-//         let filteredData = this.vendasData;
+  computed: {
+    filteredVendasData() {
+        const searchTerm = this.searchVendas.toLowerCase();
+        let filteredData = this.vendasData;
     
-//         // Filtrar pelo termo de pesquisa (opcional)
-//         if (searchTerm) {
-//           filteredData = filteredData.filter(item => 
-//             item.CODIGO.toLowerCase().includes(searchTerm) || 
-//             item.NOME.toLowerCase().includes(searchTerm)
-//           );
-//         }
+        // Filtrar pelo termo de pesquisa (opcional)
+        if (searchTerm) {
+          filteredData = filteredData.filter(item => 
+            item.CODIGO.toLowerCase().includes(searchTerm) || 
+            item.NOME.toLowerCase().includes(searchTerm)
+          );
+        }
         
     
-//         // Filtrar pelo intervalo de datas
-//         if (this.dataInicio && this.dataFim) {
-//           const inicio = new Date(this.dataInicio);
-//           const fim = new Date(this.dataFim);
-//           console.log(inicio, fim);
-//           filteredData = filteredData.filter(item => {
-//             const [day, month, year] = item.DATA.split('-');
-//             const dataVenda = new Date(`${year}-${month}-${day}`)
-//             return dataVenda >= inicio && dataVenda <= fim;
-//           });
-//         }
+        // Filtrar pelo intervalo de datas
+        if (this.dataInicio && this.dataFim) {
+          const inicio = new Date(this.dataInicio);
+          const fim = new Date(this.dataFim);
+          console.log(inicio, fim);
+          filteredData = filteredData.filter(item => {
+            const [day, month, year] = item.DATA.split('-');
+            const dataVenda = new Date(`${year}-${month}-${day}`)
+            return dataVenda >= inicio && dataVenda <= fim;
+          });
+        }
     
-//         return filteredData;
-//     },
-//     filteredProdutos() {
-//         if (!this.searchProdutos) {
-//           return this.produtosEstoqueData; // Return full data if search is empty
-//         }
-//         const searchTerm = this.searchProdutos.toLowerCase();
-//         return this.produtosEstoqueData.filter(item => 
-//           item.PRODUTO.toLowerCase().includes(searchTerm) ||
-//           item.CODIGO.toLowerCase().includes(searchTerm)
-//         );
-//       },
-//     filteredCaixaData() {
-//         const searchTerm = this.searchCaixa.toLowerCase();
-//         let filteredData = this.DataCaixa;
+        return filteredData;
+    },
+    filteredProdutos() {
+        if (!this.searchProdutos) {
+          return this.produtosEstoqueData; // Return full data if search is empty
+        }
+        const searchTerm = this.searchProdutos.toLowerCase();
+        return this.produtosEstoqueData.filter(item => 
+          item.PRODUTO.toLowerCase().includes(searchTerm) ||
+          item.CODIGO.toLowerCase().includes(searchTerm)
+        );
+      },
+    filteredComissao() {
+        if(!this.searchProdutos) {
+            return this.comissoesAll;
+        }
+        const searchTerm = this.searchProdutos.toLowerCase();
+        return this.comissoesAll.filter(item =>
+            item.NOME.toLowerCase().includes(searchTerm) ||
+            item.VALOR_TOTAL.toLowerCase().includes(searchTerm)
+        )
+    },
+    filteredCaixaData() {
+        const searchTerm = this.searchCaixa.toLowerCase();
+        let filteredData = this.DataCaixa;
     
-//         // // Filtrar pelo termo de pesquisa (opcional)
-//         if (searchTerm) {
-//           filteredData = filteredData.filter(item => 
-//             item.TIPO_MOVIMENTO.toLowerCase().includes(searchTerm)
-//           );
-//         }
+        // // Filtrar pelo termo de pesquisa (opcional)
+        if (searchTerm) {
+          filteredData = filteredData.filter(item => 
+            item.TIPO_MOVIMENTO.toLowerCase().includes(searchTerm)
+          );
+        }
     
-//         // Filtrar pelo intervalo de datas
-//         if (this.dataInicioCaixa && this.dataFimCaixa) {
-//           const inicio = new Date(this.dataInicioCaixa);
-//           const fim = new Date(this.dataFimCaixa);
-//           console.log(inicio, fim);
-//           filteredData = filteredData.filter(item => {
-//             const [day, month, year] = item.DATA.split('-');
-//             const dataVenda = new Date(`${year}-${month}-${day}`)
-//             return dataVenda >= inicio && dataVenda <= fim;
-//           });
-//         }
-//         return filteredData;
-//     }
-// }
+        // Filtrar pelo intervalo de datas
+        if (this.dataInicioCaixa && this.dataFimCaixa) {
+          const inicio = new Date(this.dataInicioCaixa);
+          const fim = new Date(this.dataFimCaixa);
+          console.log(inicio, fim);
+          filteredData = filteredData.filter(item => {
+            const [day, month, year] = item.DATA.split('-');
+            const dataVenda = new Date(`${year}-${month}-${day}`)
+            return dataVenda >= inicio && dataVenda <= fim;
+          });
+        }
+        return filteredData;
+    }
+}
   
       
   

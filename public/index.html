@@ -10,33 +10,39 @@
 <body>
    <div id="app">
        <section class="container" id="main">
-           <div class="login left">
+           <div class="login left" id="">
                <h1>Login</h1>
-               <form id="loginForm" class="form-login" action="">
+               <form id="loginForm" class="form-login" action="" @submit.prevent>
                    <div class="input-login">
                        <div>
-                           <label for="email_login">Email:</label>
-                           <input type="email" name="email" id="email_login" placeholder="Digite seu email..." autocomplete="off" required>
+                           <label for="email_login">CNPJ:</label>
+                           <input type="text" name="email" id="email_login" placeholder="Digite seu email..." autocomplete="off" v-mask="['##.###.###/####-##']" v-model="cnpj">
                        </div>
                        <div>
-                           <label for="password_login">Senha:</label>
+                           <label for="password_login">Senha:</label >
                            <div class="input-password">
-                               <input type="password" name="password" id="password_login" placeholder="Digite sua senha..." autocomplete="off" >
+                               <input type="password" name="password" id="password_login" placeholder="Digite sua senha..." autocomplete="off" v-model="password">
                                <!-- <img src="./src/img/closed_eye.png" id = "olhinhos-azuis" alt="" onclick="showPassword()"> -->
                            </div>
                        </div>
-                       <p>Esqueceu a senha?</p>
+                       <!-- <p>Esqueceu a senha?</p> -->
                    </div>
-                   <button type="submit" id="btn-login">Entrar</button>
+                   <button type="submit" id="btn-login" @click="login()">Entrar</button>
                </form>
            </div>
-           <div class="sign-in right">
+           <!-- <div class="sign-in right">
                <h1>Seja bem-vindo ao <span>Dashboard R3</span></h1>
                <img src="img/R3.png" alt="">
-           </div>     
+               <div class="buttons-mobile">
+                    <button id="btn-login2">Login</button>
+                </div>
+           </div>      -->
        </section>
    </div>
 
-   <script type="module" src="./server/index.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+   <script src="./js/vueLogin.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   <script src="./js/vuemask.js"></script>
 </body>
 </html>

@@ -98,7 +98,7 @@ nav hr {
 }
 
 nav .nav-links {
-	margin-top: 20px;
+	margin: 20px 0 0 20px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -117,9 +117,10 @@ nav .nav-links .nav-item i {
 	border-radius: 10px;
 	margin: 10px;
 	font-size: 25px;
-	width: 39%;
+	width: 70%;
 	text-align: center;
 	flex-direction: row;
+	cursor: pointer;
 }
 
 nav .nav-links .nav-item li {
@@ -129,10 +130,13 @@ nav .nav-links .nav-item li {
 nav .nav-links .nav-item.active {
 	background-color: rgb(102, 186, 255);
 	border-radius: 10px;
-	padding-right: 60px;
 	box-shadow: var(--box-shadow);
+	padding: 0 2rem 0 2rem;
 }
- 
+.navTxt{
+	display: flex;
+	justify-content: center;
+} 
 nav .nav-links .nav-item.active li {
 	color: rgb(12, 12, 12);
 	
@@ -144,7 +148,7 @@ nav .nav-links .nav-item.active i {
 	padding: 14px;
 	border-radius: 10px;
 	margin: 10px;
-	width: 39%;
+	width: 70%;
 }
 
 nav .nav-links .searchLabelWrap {
@@ -279,6 +283,7 @@ header input {
 .cabecalho .primary-info .info-header p,
 .cabecalho .primary-info .info-header h2 {
 	margin: 0;
+	font-size: 1.5rem;
 }
 
 .cabecalho .primary-info .background-icon {
@@ -422,149 +427,150 @@ a:active {
 .conteudo-tab.active {
 	display: block;
 }
-
+#tableCaixa{
+	max-height: 60vh;
+	overflow-y: auto;
+}
 
 /*--------------------------------------GRID VICTOR--------------------------------------*/
 
-.container{
-  width: 100%;
-  
-}
-.user-container{
-  background-color: transparent;
-  margin-bottom: 60px;
-  border-radius: 20px;
-  padding-bottom: 20px;
-  height: fit-content;
-  width: fit-content;
-	height: fit-content;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-self: center;
-}
-.user-div-title{
-  width: 100%;
-  text-align: center;
-  background-image: linear-gradient(to right, #1a3482, #1c6fff);
-  -webkit-background-clip: text; 
-  background-clip: text; 
-  -webkit-text-fill-color: transparent;
-}
-.user-grid {
-  display: grid;
-  width: 100%;
-  text-align: center;
-  grid-template-columns: repeat(5, 1fr); 
-  margin-top: 20px;
-  background: linear-gradient(to right, #0751ff, #0022e2);
-  color: white;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-.user-grid-item {
-  padding: 5px;
-  font-weight: bold;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-}
-.user-grid-item:not(:last-child){
-  border-right: 2px solid white;
-}
-.user-list{
-  width: 100%;
-  background-color: white;
-}
-.item-list{
-  width: 100%;
-  height: 60px;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  color: #185eff;
-  font-size: 14px;
-  font-weight: bold;
-  padding-bottom: 5px;
-  border-bottom: 2px solid gray;
-  border-left: 2px solid gray;
-  border-right: 2px solid gray;
-}
-.item-list:last-child{
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-.item-list p{
-  text-align: center;
-}
-#pagination{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.botao-paginacao{
-  margin-top: 15px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  background-color: #821A4D;
-  font-weight: bold;
-  border: none;
-  color: white;
-}
-.botao-paginacao:hover{
-  cursor: pointer;
-  background-color: #c41469;
-}
-.botao-paginacao:not(:last-child){
-  margin-right: 10px;
-}
-.botao-paginacao.ativo{
-  background-color: #f15474;
-}
-.botao-paginacao.ativo:hover{
-  background-color: #ae9298;
-}
-.item{
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-	font-size: 12px;
-}
-.item:not(:last-child){
-  border-right: 2px solid gray;
-}
-.img_div{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.icon{
-  width: 50px;
-}
-.box{
-	height: 60vh;
-}
-.box-content {
-    height: 80%;
-    overflow-y: auto;
-    position: relative;
-}
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table thead {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: #fff; /* Cor de fundo para o cabeçalho */
-    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); /* Pequena sombra para o efeito de destaque */
-}
 .dashboard{
 	display: flex;
 	flex-direction: row;
+}
+
+@media screen and (max-width: 768px) {
+	/* Ajustando o menu lateral */
+	nav {
+		width: 100%;
+		padding: 5px;
+	}
+
+	/* Alterações no layout do conteúdo */
+	.dashboard {
+		flex-direction: column;
+	}
+
+	.principal {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.principal .box {
+		width: 100%;
+		margin-bottom: 20px;
+	}
+
+	.cabecalho {
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.conteudo {
+		padding: 10px;
+	}
+
+	/* Ajustando os botões para preencher a tela */
+	button {
+		width: 100%;
+		font-size: 14px;
+	}
+}
+
+@media screen and (max-width: 489px) {
+	/* Para telas ainda menores, como celulares */
+	nav .nav-links {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-around;
+	}
+	nav .nav-links .nav-item.active i {
+    color: rgb(255, 255, 255);
+    background: var(--gradient-color);
+    padding: 14px;
+    border-radius: 10px;
+    margin: 10px;
+    width: 70%;
+}
+nav .nav-links .nav-item.active {
+	background-color: rgb(102, 186, 255);
+	border-radius: 10px;
+	padding: 0 15px 0 5px;
+	box-shadow: var(--box-shadow);
+}
+
+nav .nav-links .nav-item i {
+	box-shadow: var(--box-shadow);
+	color: var(--primary-color);
+	background: white;
+	padding: 14px;
+	border-radius: 10px;
+	margin: 10px;
+	font-size: 25px;
+	width: 70%;
+	text-align: center;
+	flex-direction: row;
+}
+	.principal .box {
+		padding: 10px;
+	}
+
+	.navTxt{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.cabecalho .primary-info {
+    color: var(--gray-dark);
+    background-color: #fff;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    text-align: flex-start;
+    flex: 1;
+    margin: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+
+.cabecalho .primary-info .background-icon {
+	padding: 27px;
+	border-radius: 10px;
+	box-shadow: var(--box-shadow);
+	height: 8vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0.5;
+	font-size: 25px;
+	color: white;
+	max-width: 3vw;
+	background: var(--gradient-color);
+}
+nav .nav-header img {
+	margin-top: 10px;
+	max-width: 90px;
+}
+
+#tableCaixa table{
+	font-size: 10px;
+}
+#dias{
+	font-size: 0px;
+}
+#diasGrafico{
+	font-size: 1rem;
+}
+.principal .box-header {
+	flex: 1;
+	margin-right: 10px;
+	display: flex;
+	height: 50px;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 0.6rem;
+}
 }
