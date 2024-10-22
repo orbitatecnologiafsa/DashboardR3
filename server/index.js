@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configuração de sessão
 app.use(session({
-  secret: 'segredo-super-seguro',
+  secret: 'gRyt54g!r38B6N3#29&*Ja23FD!la89S',
   resave: false,
   saveUninitialized: false
 }));
@@ -23,16 +23,16 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Rota de login
 app.post('/login', (req, res) => {
   const { cnpj, password } = req.body;
-  console.log('CNPJ:', cnpj);
-  console.log('Senha:', password);
+  // console.log('CNPJ:', cnpj);
+  // console.log('Senha:', password);
 
   // Lógica de autenticação (ex. verificar no banco)
-  console.log('Autenticando...');
+  // console.log('Autenticando...');
   
   db.query('SELECT * FROM empresas WHERE cnpj = ?', [cnpj], (err, results) => {
-    console.log("Chegou aqui");
+    // console.log("Chegou aqui");
     
-    console.log(results);
+    // console.log(results);
     console.log('Erro:', err);
     if (err) {
       return res.status(500).send('Erro no servidor');
@@ -57,7 +57,7 @@ app.post('/login', (req, res) => {
       req.session.userId = results[0].empresa;
       
       // Redireciona para outra página (ex. dashboard)
-      console.log('Autenticação bem-sucedida');
+      // console.log('Autenticação bem-sucedida');
       res.json({ message: 'Autenticação bem-sucedida', status: 'success' });
     });
   });
@@ -65,7 +65,7 @@ app.post('/login', (req, res) => {
 
 app.get('/dashboardProdutos', (req, res) => {
   const user = req.session.userId;
-  console.log(user);
+  // console.log(user);
   if (!req.session.userId) {
     return res.status(401).send('Necessita de autenticação');
   }
@@ -74,7 +74,7 @@ app.get('/dashboardProdutos', (req, res) => {
     if (err) {
       return res.status(500).send('Erro no servidor');
     }
-    console.log(results);
+    // console.log(results);
     res.json(results);
   });
 })
@@ -125,7 +125,7 @@ app.get('/dashboardVendas', (req, res) => {
 })
 app.get('/dashboardCaixa', (req, res) =>{
   const user = req.session.userId;
-  console.log(user);
+  // console.log(user);
   if (!req.session.userId) {
     return res.status(401).send('Necessita de autenticação');
   }
@@ -167,14 +167,14 @@ app.get('/dashboardCaixa', (req, res) =>{
       TIPO_MOVIMENTO: result.TIPO_MOVIMENTO,
 
     }));
-    console.log(dataConvertida);
+    // console.log(dataConvertida);
     res.json(dataConvertida);
   });
 })
 
 app.get('/dashboardComissoes', (req, res) =>{
   const user = req.session.userId;
-  console.log(user);
+  // console.log(user);
   if (!req.session.userId) {
     return res.status(401).send('Necessita de autenticação');
   }
@@ -183,7 +183,7 @@ app.get('/dashboardComissoes', (req, res) =>{
     if (err) {
       return res.status(500).send('Erro no servidor');
     }
-    console.log(results);
+    // console.log(results);
     res.json(results);
   });
 })

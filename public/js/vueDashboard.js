@@ -497,8 +497,7 @@ new Vue({
         }
         const searchTerm = this.searchProdutos.toLowerCase();
         return this.comissoesAll.filter(item =>
-            item.NOME.toLowerCase().includes(searchTerm) ||
-            item.VALOR_TOTAL.toLowerCase().includes(searchTerm)
+            item.NOME.toLowerCase().includes(searchTerm)
         )
     },
     filteredCaixaData() {

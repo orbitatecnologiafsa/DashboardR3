@@ -11,7 +11,8 @@
    <div id="app">
        <section class="container" id="main">
            <div class="login left" id="">
-               <h1>Login</h1>
+                <img id="logoMarca" src="./img/R3.png" alt="" srcset="" >
+                
                <form id="loginForm" class="form-login" action="" @submit.prevent>
                    <div class="input-login">
                        <div>
@@ -28,16 +29,23 @@
                        <!-- <p>Esqueceu a senha?</p> -->
                    </div>
                    <button type="submit" id="btn-login" @click="login()">Entrar</button>
-               </form>
-           </div>
+                </form>
+                <div class="logo2">
+                    <img id="logoMarca2" src="./img/logo_orbita-transparente (2).png" alt="" srcset="">
+
+                </div>
+               
+            </div>
+            
            <!-- <div class="sign-in right">
                <h1>Seja bem-vindo ao <span>Dashboard R3</span></h1>
                <img src="img/R3.png" alt="">
                <div class="buttons-mobile">
-                    <button id="btn-login2">Login</button>
+                   <button id="btn-login2">Login</button>
                 </div>
            </div>      -->
        </section>
+      
    </div>
 
    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
